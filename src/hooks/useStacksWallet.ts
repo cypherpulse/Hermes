@@ -46,7 +46,6 @@ export function useStacksWallet() {
     const checkConnection = () => {
       if (checkIsConnected()) {
         const storage = getLocalStorage();
-        console.log('Storage data:', storage);
         
         // The new API stores addresses differently
         const stxAddresses = storage?.addresses?.stx;
@@ -77,7 +76,6 @@ export function useStacksWallet() {
       
       // Get addresses from local storage after connect
       const storage = getLocalStorage();
-      console.log('Storage after connect:', storage);
       
       const stxAddresses = storage?.addresses?.stx;
       if (stxAddresses && stxAddresses.length > 0) {

@@ -58,9 +58,9 @@ export const openWalletApp = (wallet: 'metamask' | 'coinbase' | 'leather'): void
 // Check if wallet is installed
 export const isWalletInstalled = (wallet: 'metamask' | 'coinbase' | 'leather'): boolean => {
   if (wallet === 'metamask') {
-    return typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask;
+    return typeof window.ethereum !== 'undefined' && !!(window.ethereum as any).isMetaMask;
   } else if (wallet === 'coinbase') {
-    return typeof window.ethereum !== 'undefined' && window.ethereum.isCoinbaseWallet;
+    return typeof window.ethereum !== 'undefined' && !!(window.ethereum as any).isCoinbaseWallet;
   } else if (wallet === 'leather') {
     return typeof (window as any).LeatherProvider !== 'undefined';
   }

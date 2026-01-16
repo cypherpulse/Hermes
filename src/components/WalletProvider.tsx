@@ -1,10 +1,16 @@
-import '@rainbow-me/rainbowkit/styles.css';
-import { RainbowKitProvider, darkTheme } from '@rainbow-me/rainbowkit';
-import { WagmiProvider } from 'wagmi';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { config } from '@/lib/wagmi-config';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { WagmiProvider } from 'wagmi'
+import { wagmiAdapter } from '@/lib/reown-config'
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      staleTime: 5000,
+    },
+  },
+})
 
 interface WalletProviderProps {
   children: React.ReactNode;
@@ -12,18 +18,9 @@ interface WalletProviderProps {
 
 export function WalletProvider({ children }: WalletProviderProps) {
   return (
-    <WagmiProvider config={config}>
+    <WagmiProvider config={wagmiAdapter.wagmiConfig}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider
-          theme={darkTheme({
-            accentColor: 'hsl(25, 95%, 53%)',
-            accentColorForeground: 'white',
-            borderRadius: 'medium',
-            fontStack: 'system',
-          })}
-        >
-          {children}
-        </RainbowKitProvider>
+        {children}
       </QueryClientProvider>
     </WagmiProvider>
   );
