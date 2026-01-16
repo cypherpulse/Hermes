@@ -93,7 +93,7 @@ export function ConnectWalletButton() {
                     <span className="font-mono text-foreground">
                       {account.displayName}
                     </span>
-                    {account.displayBalance && (
+                    {account.displayBalance && !account.displayBalance.includes('NaN') && (
                       <span className="text-muted-foreground ml-2 hidden sm:inline">
                         ({account.displayBalance})
                       </span>
