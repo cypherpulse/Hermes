@@ -9,7 +9,4 @@ export const config = getDefaultConfig({
   projectId,
   chains: [sepolia],
   ssr: false,
-  appDescription: 'Cross-chain USDC bridge between Ethereum and Stacks',
-  appUrl: typeof window !== 'undefined' ? window.location.origin : 'https://hermes-bridge.vercel.app',
-  appIcon: typeof window !== 'undefined' ? `${window.location.origin}/hermes-logo.svg` : 'https://hermes-bridge.vercel.app/hermes-logo.svg',
 });
