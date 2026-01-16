@@ -33,13 +33,13 @@ export function BalanceDisplay({
         <div className="bg-secondary rounded-lg p-3">
           <p className="text-xs text-muted-foreground mb-1">ETH (Sepolia)</p>
           <p className="text-lg font-bold text-foreground">
-            {parseFloat(ethBalance).toFixed(4)}
+            {ethBalance && !isNaN(parseFloat(ethBalance)) ? parseFloat(ethBalance).toFixed(4) : '0.0000'}
           </p>
         </div>
         <div className="bg-secondary rounded-lg p-3">
           <p className="text-xs text-muted-foreground mb-1">USDC (Sepolia)</p>
           <p className="text-lg font-bold text-foreground">
-            {parseFloat(usdcBalance).toFixed(2)}
+            {usdcBalance && !isNaN(parseFloat(usdcBalance)) ? parseFloat(usdcBalance).toFixed(2) : '0.00'}
           </p>
         </div>
       </div>
