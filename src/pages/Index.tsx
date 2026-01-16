@@ -190,15 +190,14 @@ const Index = () => {
                 Circle xReserve
               </a>
             </p>
-            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
-              <span>Donate:</span>
+            <div className="flex items-center justify-center">
               <code 
-                className="bg-secondary px-2 py-1 rounded text-primary cursor-pointer hover:bg-secondary/80 transition-colors"
+                className="bg-secondary px-3 py-2 rounded text-primary cursor-pointer hover:bg-secondary/80 transition-colors text-xs"
                 onClick={() => {
                   navigator.clipboard.writeText('SP2F70QJ9J57YSSZE76KC1A3X718ADXSZPG8581EP');
                   alert('Address copied!');
                 }}
-                title="Click to copy"
+                title="Click to copy donation address"
               >
                 SP2F70QJ9J57YSSZE76KC1A3X718ADXSZPG8581EP
               </code>
