@@ -135,7 +135,7 @@
 | **Dual-Chain Interface** | Unified UI for both Ethereum and Stacks operations |
 | **Real-Time Tracking** | Live transaction status and balance updates |
 | **Modern UI/UX** | Beautiful, responsive interface with dark mode |
-| **Optimized Performance** | Built with Vite for fast load times |
+| **Optimized Performance** | Built with Vite for blazing fast load times |
 | **Secure & Reliable** | Powered by Circle's trusted xReserve protocol |
 
 ---
