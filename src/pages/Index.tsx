@@ -66,7 +66,7 @@ const Index = () => {
                 <span className="text-foreground"> ↔ USDCx</span>
               </h2>
               <p className="text-muted-foreground text-lg">
-                Lightning-fast bridging between Ethereum and Stacks
+                Blazing fast bridging between Ethereum and Stacks
               </p>
               <p className="text-xs text-muted-foreground mt-2">
                 Powered by Circle's xReserve Protocol
