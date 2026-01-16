@@ -7,7 +7,6 @@ import {
   request 
 } from '@stacks/connect';
 import { Cl, Pc } from '@stacks/transactions';
-import { isMobile, openWalletApp } from '@/lib/mobile-utils';
 
 // USDCx contract details on testnet
 const USDCX_CONTRACT = {
@@ -45,32 +44,6 @@ export function useStacksWallet() {
   // Check if already connected on mount
   useEffect(() => {
     const checkConnection = () => {
-      // Check if returning from mobile wallet connection
-      if (sessionStorage.getItem('stacks_connecting') === 'true') {
-        sessionStorage.removeItem('stacks_connecting');
-        console.log('Checking connection after mobile wallet redirect');
-        // Wait a bit for wallet to process
-        setTimeout(() => {
-          if (checkIsConnected()) {
-            const storage = getLocalStorage();
-            const stxAddresses = storage?.addresses?.stx;
-            if (stxAddresses && stxAddresses.length > 0) {
-              const testnetAddr = stxAddresses.find((a: { address: string }) => 
-                a.address.startsWith('ST')
-              );
-              const address = testnetAddr?.address || stxAddresses[0]?.address;
-              if (address) {
-                setStacksAddress(address);
-                setIsConnected(true);
-                fetchUsdcxBalance(address);
-                setIsLoading(false);
-              }
-            }
-          }
-        }, 500);
-        return;
-      }
-      
       if (checkIsConnected()) {
         const storage = getLocalStorage();
         console.log('Storage data:', storage);
@@ -99,16 +72,7 @@ export function useStacksWallet() {
     try {
       setIsLoading(true);
       
-      // For mobile, use deep linking to open Leather wallet
-      if (isMobile()) {
-        console.log('Connecting Stacks wallet on mobile device');
-        // Store a flag so we know to check connection after returning from wallet
-        sessionStorage.setItem('stacks_connecting', 'true');
-        openWalletApp('leather');
-        return;
-      }
-      
-      // Desktop: Use the connect() API
+      // Use @stacks/connect v8 API - it handles mobile deep linking automatically
       await connect();
       
       // Get addresses from local storage after connect
