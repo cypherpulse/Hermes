@@ -489,6 +489,26 @@ sequenceDiagram
 | **Testnet USDC** | [Circle Faucet](https://faucet.circle.com/) | Ethereum Sepolia |
 | **Testnet STX** | [Stacks Faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet) | Stacks Testnet |
 
+### Mobile Wallet Support
+
+**For mobile browsers to connect wallets properly:**
+
+1. **HTTPS Required**: WalletConnect requires HTTPS in production. Deploy to Vercel/Netlify for automatic HTTPS.
+2. **WalletConnect Project**: Ensure your WalletConnect project is configured with:
+   - Correct app URL (`https://your-domain.com`)
+   - App icon (use `/hermes-logo.svg`)
+   - Description: "Cross-chain USDC bridge between Ethereum and Stacks"
+3. **Supported Wallets**:
+   - **Ethereum**: MetaMask, Coinbase Wallet, Trust Wallet, Rainbow
+   - **Stacks**: Leather Wallet (mobile app)
+4. **Mobile Browsers**: Works best in Safari (iOS), Chrome (Android)
+
+**Testing Mobile Wallets:**
+- Use your phone's browser to access the deployed app
+- Scan QR codes with wallet apps
+- Ensure popups are not blocked
+- Try both portrait and landscape orientations
+
 ### Installation
 
 ```bash

@@ -7,6 +7,7 @@ import {
   request 
 } from '@stacks/connect';
 import { Cl, Pc } from '@stacks/transactions';
+import { isMobile } from '@/lib/mobile-utils';
 
 // USDCx contract details on testnet
 const USDCX_CONTRACT = {
@@ -70,9 +71,15 @@ export function useStacksWallet() {
 
   const connectWallet = useCallback(async () => {
     try {
-      // Use the new connect() API
-      const response = await connect();
-      console.log('Connect response:', response);
+      setIsLoading(true);
+      
+      // For mobile, ensure we use proper deep linking
+      if (isMobile()) {
+        console.log('Connecting wallet on mobile device');
+      }
+      
+      // Use the connect() API - v8 compatible
+      await connect();
       
       // Get addresses from local storage after connect
       const storage = getLocalStorage();
@@ -92,8 +99,10 @@ export function useStacksWallet() {
           fetchUsdcxBalance(address);
         }
       }
+      setIsLoading(false);
     } catch (error) {
       console.error('Error connecting wallet:', error);
+      setIsLoading(false);
     }
   }, []);
 

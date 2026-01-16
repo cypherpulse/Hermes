@@ -1,4 +1,5 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import { isMobile, isIOS, isAndroid } from '@/lib/mobile-utils';
 
 export function ConnectWalletButton() {
   return (
@@ -13,6 +14,8 @@ export function ConnectWalletButton() {
       }) => {
         const ready = mounted;
         const connected = ready && account && chain;
+        const mobile = isMobile();
+        const iosDevice = isIOS();
 
         return (
           <div
@@ -31,6 +34,7 @@ export function ConnectWalletButton() {
                   <button
                     onClick={openConnectModal}
                     className="gradient-bitcoin text-primary-foreground font-semibold px-6 py-3 rounded-xl glow-orange hover:opacity-90 transition-opacity flex items-center gap-2"
+                    title={mobile ? 'Open in MetaMask or Coinbase Wallet app' : 'Connect Wallet'}
                   >
                     <svg
                       className="w-5 h-5"
@@ -45,7 +49,12 @@ export function ConnectWalletButton() {
                         d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
                       />
                     </svg>
-                    Connect Wallet
+                    <span className="hidden sm:inline">
+                      {mobile ? 'Connect Mobile Wallet' : 'Connect Wallet'}
+                    </span>
+                    <span className="sm:hidden">
+                      {mobile ? 'Wallet' : 'Connect'}
+                    </span>
                   </button>
                 );
               }
@@ -90,11 +99,11 @@ export function ConnectWalletButton() {
                     onClick={openAccountModal}
                     className="bg-secondary px-4 py-2 rounded-xl border border-border hover:border-primary/50 transition-colors"
                   >
-                    <span className="font-mono text-foreground">
-                      {account.displayName}
+                    <span className="font-mono text-foreground text-sm">
+                      {mobile ? `${account.displayName?.slice(0, 6)}...` : account.displayName}
                     </span>
                     {account.displayBalance && !account.displayBalance.includes('NaN') && (
-                      <span className="text-muted-foreground ml-2 hidden sm:inline">
+                      <span className="text-muted-foreground ml-2 hidden sm:inline text-xs">
                         ({account.displayBalance})
                       </span>
                     )}
