@@ -27,3 +27,42 @@ export const getRecommendedMobileWallet = (): string => {
   }
   return 'MetaMask';
 };
+
+// Deep link helpers for wallet apps
+export const openWalletApp = (wallet: 'metamask' | 'coinbase' | 'leather'): void => {
+  const currentUrl = encodeURIComponent(window.location.href);
+  
+  if (wallet === 'metamask') {
+    // MetaMask deep link
+    if (isIOS()) {
+      window.location.href = `https://metamask.app.link/dapp/${window.location.hostname}`;
+    } else {
+      window.location.href = `https://metamask.app.link/dapp/${window.location.hostname}`;
+    }
+  } else if (wallet === 'coinbase') {
+    // Coinbase Wallet deep link
+    if (isIOS()) {
+      window.location.href = `https://go.cb-w.com/dapp?cb_url=${currentUrl}`;
+    } else {
+      window.location.href = `https://go.cb-w.com/dapp?cb_url=${currentUrl}`;
+    }
+  } else if (wallet === 'leather') {
+    // Leather wallet deep link
+    if (isIOS() || isAndroid()) {
+      const leatherUrl = `https://leather.io/connect?return=${currentUrl}`;
+      window.location.href = leatherUrl;
+    }
+  }
+};
+
+// Check if wallet is installed
+export const isWalletInstalled = (wallet: 'metamask' | 'coinbase' | 'leather'): boolean => {
+  if (wallet === 'metamask') {
+    return typeof window.ethereum !== 'undefined' && window.ethereum.isMetaMask;
+  } else if (wallet === 'coinbase') {
+    return typeof window.ethereum !== 'undefined' && window.ethereum.isCoinbaseWallet;
+  } else if (wallet === 'leather') {
+    return typeof (window as any).LeatherProvider !== 'undefined';
+  }
+  return false;
+};
