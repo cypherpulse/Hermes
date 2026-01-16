@@ -19,3 +19,68 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+--------------------------------------------------------------------------------
+                              ADDITIONAL TERMS
+--------------------------------------------------------------------------------
+
+DISCLAIMER OF LIABILITY FOR FINANCIAL LOSS
+
+This software interacts with blockchain networks, smart contracts, and 
+cryptocurrency assets. The authors and contributors of this software shall not 
+be held liable for any financial losses, including but not limited to:
+
+- Loss of cryptocurrency or digital assets
+- Failed or stuck transactions
+- Incorrect transfers due to user error or software malfunction
+- Bridge delays or attestation failures
+- Smart contract vulnerabilities in third-party protocols
+- Network congestion or blockchain failures
+
+PROHIBITED USES
+
+While this software is open source, the following uses are expressly prohibited 
+and the authors disclaim all liability for damages arising from such uses:
+
+1. MALICIOUS MODIFICATIONS: Any modification of this software intended to 
+   steal, redirect, or misappropriate funds from users is strictly prohibited.
+
+2. HACKING & EXPLOITATION: Using this software or any derivative works to 
+   exploit vulnerabilities in blockchain networks, smart contracts, or other 
+   users' wallets is prohibited.
+
+3. MONEY LAUNDERING: Using this software for money laundering, terrorist 
+   financing, or any other illegal financial activities is prohibited.
+
+4. PHISHING & FRAUD: Creating fake or misleading versions of this software 
+   to deceive users into revealing private keys or sending funds to malicious 
+   addresses is prohibited.
+
+5. SANCTIONS EVASION: Using this software to evade financial sanctions imposed 
+   by any government or international body is prohibited.
+
+SECURITY NOTICE
+
+- This software is provided for educational and development purposes.
+- Users should verify all transaction details before signing.
+- Never share your private keys or seed phrases.
+- The authors recommend thorough security audits before production use.
+- Use at your own risk on testnets before deploying to mainnet.
+
+INDEMNIFICATION
+
+By using, modifying, or distributing this software, you agree to indemnify and 
+hold harmless the authors and contributors from any claims, damages, or 
+expenses arising from your use or misuse of the software.
+
+THIRD-PARTY DEPENDENCIES
+
+This software relies on third-party services and protocols including but not 
+limited to Circle's xReserve, Stacks blockchain, and Ethereum. The authors 
+make no guarantees about the availability, security, or functionality of these 
+third-party services.
+
+--------------------------------------------------------------------------------
+
+For questions or to report security vulnerabilities, please open an issue at:
+https://github.com/cypherpulse/Hermes/issues
