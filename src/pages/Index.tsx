@@ -4,7 +4,7 @@ import { ConnectWalletButton } from "@/components/bridge/ConnectWalletButton";
 import { BridgeForm } from "@/components/bridge/BridgeForm";
 import { TransferForm } from "@/components/bridge/TransferForm";
 import { BalanceDisplay } from "@/components/bridge/BalanceDisplay";
-import { ExternalLink, ArrowDownUp, Send, Zap } from "lucide-react";
+import { ExternalLink, ArrowDownUp, Send } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const Index = () => {
@@ -42,9 +42,11 @@ const Index = () => {
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl gradient-bitcoin flex items-center justify-center shadow-lg">
-                  <Zap className="w-5 h-5 text-primary-foreground" />
-                </div>
+                <img 
+                  src="/hermes-logo.svg" 
+                  alt="Hermes" 
+                  className="w-10 h-10 rounded-xl shadow-lg"
+                />
                 <div>
                   <h1 className="text-xl font-bold text-foreground tracking-tight">Hermes</h1>
                   <p className="text-xs text-muted-foreground">USDC Bridge</p>
