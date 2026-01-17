@@ -8,6 +8,8 @@
   <strong>Bridge USDC from Ethereum to Stacks & Transfer USDCx Seamlessly</strong>
 </p>
 
+![Bridge Interface Preview](assets/bridge.png)
+
 <p align="center">
   Hermes Bridge is a secure, production-ready cross-chain bridge enabling seamless USDC transfers between Ethereum and Stacks blockchains. It provides two core functionalities: (1) Bridge USDC from Ethereum to USDCx on Stacks via Circle's trusted xReserve protocol, and (2) Transfer USDCx between Stacks addresses with full custody and control. 
 
@@ -76,6 +78,7 @@
 - [Quick Start](#quick-start)
   - [Prerequisites](#prerequisites)
   - [Get Testnet Tokens](#get-testnet-tokens)
+  - [Mobile Wallet Support](#mobile-wallet-support)
   - [Installation](#installation)
   - [Development](#development)
   - [Production Build](#production-build)
@@ -171,6 +174,8 @@
 - Simple recipient address input
 - Native Stacks smart contract call
 - Ideal for DeFi operations and payments
+
+![Transfer Interface Preview](assets/send.png)
 
 ---
 
