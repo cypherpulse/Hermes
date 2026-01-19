@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/hermes-logo.svg" alt="Hermes Logo" width="120" height="120" />
+  <img src="assets/logo.png" alt="Hermes Logo" width="100%" height="100%" />
 </p>
 
 <h1 align="center">Hermes Bridge</h1>
@@ -8,10 +8,7 @@
   <strong>Bridge USDC from Ethereum to Stacks & Transfer USDCx Seamlessly</strong>
 </p>
 
-![Bridge Interface Preview](assets/bridge.png)
 
-<p align="center">
-  Hermes Bridge is a secure, production-ready cross-chain bridge enabling seamless USDC transfers between Ethereum and Stacks blockchains. It provides two core functionalities: (1) Bridge USDC from Ethereum to USDCx on Stacks via Circle's trusted xReserve protocol, and (2) Transfer USDCx between Stacks addresses with full custody and control. 
 
 <p align="center">
   <a href="https://ethereum.org">
@@ -26,6 +23,10 @@
   <a href="https://www.circle.com/en/xreserve">
     <img src="https://img.shields.io/badge/xReserve-FF6B35?style=for-the-badge" alt="xReserve" />
   </a>
+</p>
+
+<p align="center">
+  Hermes Bridge is a secure, production-ready cross-chain bridge enabling seamless USDC transfers between Ethereum and Stacks blockchains. It provides two core functionalities: (1) Bridge USDC from Ethereum to USDCx on Stacks via Circle's trusted xReserve protocol, and (2) Transfer USDCx between Stacks addresses with full custody and control. 
 </p>
 
 <p align="center">
@@ -112,6 +113,8 @@
 ---
 
 ## Core Features
+
+![Bridge Interface Preview](assets/bridge.png)
 
 ### Bridge Module
 | Feature | Description |
