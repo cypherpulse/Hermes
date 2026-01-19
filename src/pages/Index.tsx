@@ -43,13 +43,13 @@ const Index = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <img 
-                  src="/hermes-logo.svg" 
+                  src="/logo.png" 
                   alt="Hermes" 
-                  className="w-10 h-10 rounded-xl shadow-lg"
+                  className="w-10 h-10 rounded-xl shadow-lg bg-white p-1"
                 />
                 <div>
                   <h1 className="text-xl font-bold text-foreground tracking-tight">Hermes</h1>
-                  <p className="text-xs text-muted-foreground">USDC Bridge</p>
+                  <p className="text-xs text-muted-foreground">Borderless Stablecoins</p>
                 </div>
               </div>
               
