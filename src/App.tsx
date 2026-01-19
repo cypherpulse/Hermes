@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { WalletProvider } from "@/components/WalletProvider";
 import Index from "./pages/Index";
+import MultiChain from "./pages/MultiChain";
 import NotFound from "./pages/NotFound";
 
 const App = () => (
@@ -14,6 +15,7 @@ const App = () => (
       <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
         <Routes>
           <Route path="/" element={<Index />} />
+          <Route path="/multichain" element={<MultiChain />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
