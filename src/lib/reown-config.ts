@@ -16,8 +16,8 @@ const metadata = {
   url: typeof window !== 'undefined' ? window.location.origin : 'https://hermes-bridge.vercel.app',
   icons: [
     typeof window !== 'undefined' 
-      ? `${window.location.origin}/hermes-logo.svg` 
-      : 'https://hermes-bridge.vercel.app/hermes-logo.svg'
+      ? `${window.location.origin}/logo.png` 
+      : 'https://hermes-bridge.vercel.app/logo.png'
   ]
 }
 
