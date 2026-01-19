@@ -183,14 +183,7 @@ const Index = () => {
           <div className="container mx-auto px-4 text-center space-y-3">
             <p className="text-sm text-muted-foreground">
               Powered by{" "}
-              <a
-                href="https://www.circle.com/en/xreserve"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary hover:underline"
-              >
-                Circle xReserve
-              </a>
+              Alkebulant Labs
             </p>
             <div className="flex items-center justify-center">
               <code 
