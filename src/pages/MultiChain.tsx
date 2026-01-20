@@ -1,0 +1,261 @@
+/**
+ * MultiChain Page
+ * 
+ * Page for multichain bridging - allows users to bridge USDC from
+ * various EVM chains to Stacks (via Ethereum) or between EVM chains directly.
+ */
+
+import { Link, useLocation } from 'react-router-dom';
+import { ExternalLink, ArrowLeft, Zap, Shield, Globe } from 'lucide-react';
+import { ConnectWalletButton } from '@/components/bridge/ConnectWalletButton';
+import { MultiChainBridgeForm } from '@/components/multichain/MultiChainBridgeForm';
+import { useMultiChainBridge } from '@/hooks/useMultiChainBridge';
+import { useStacksWallet } from '@/hooks/useStacksWallet';
+import { cn } from '@/lib/utils';
+
+export default function MultiChain() {
+  const location = useLocation();
+  const { isConnected } = useMultiChainBridge();
+  const { stacksAddress, isConnected: isStacksConnected, connectWallet: connectStacksWallet } = useStacksWallet();
+
+  const navItems = [
+    { path: '/', label: 'Bridge' },
+    { path: '/multichain', label: 'Multichain' },
+  ];
+
+  return (
+    <div className="min-h-screen bg-background">
+      {/* Background gradient effects */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
+        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative z-10">
+        {/* Header */}
+        <header className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
+          <div className="container mx-auto px-4 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-6">
+                <Link to="/" className="flex items-center gap-3">
+                  <img 
+                    src="/logo.png" 
+                    alt="Hermes" 
+                    className="w-10 h-10 rounded-xl shadow-lg bg-white p-1"
+                  />
+                  <div>
+                    <h1 className="text-xl font-bold text-foreground tracking-tight">Hermes</h1>
+                    <p className="text-xs text-muted-foreground">Borderless Stablecoins</p>
+                  </div>
+                </Link>
+
+                {/* Navigation */}
+                <nav className="hidden md:flex items-center gap-1">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={cn(
+                        "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                        location.pathname === item.path
+                          ? "bg-primary/10 text-primary"
+                          : "text-muted-foreground hover:text-foreground hover:bg-accent"
+                      )}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </nav>
+              </div>
+              
+              <ConnectWalletButton />
+            </div>
+          </div>
+        </header>
+
+        {/* Main Content */}
+        <main className="container mx-auto px-4 py-12">
+          <div className="max-w-lg mx-auto space-y-6">
+            {/* Hero Section */}
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-1.5 rounded-full text-sm font-medium mb-4">
+                <Globe className="w-4 h-4" />
+                Multichain Bridge
+              </div>
+              <h2 className="text-3xl font-bold mb-3">
+                <span className="text-foreground">Bridge from </span>
+                <span className="text-gradient-bitcoin">Any Chain</span>
+              </h2>
+              <p className="text-muted-foreground">
+                USDC from 7+ chains to Stacks via Circle CCTP
+              </p>
+            </div>
+
+            {/* Feature Pills */}
+            <div className="flex flex-wrap justify-center gap-2 mb-6">
+              <div className="flex items-center gap-1.5 bg-card border border-border px-3 py-1.5 rounded-full text-sm">
+                <Zap className="w-3.5 h-3.5 text-yellow-500" />
+                <span className="text-muted-foreground">Fast</span>
+              </div>
+              <div className="flex items-center gap-1.5 bg-card border border-border px-3 py-1.5 rounded-full text-sm">
+                <Shield className="w-3.5 h-3.5 text-green-500" />
+                <span className="text-muted-foreground">Secure</span>
+              </div>
+              <div className="flex items-center gap-1.5 bg-card border border-border px-3 py-1.5 rounded-full text-sm">
+                <span className="text-blue-500">◎</span>
+                <span className="text-muted-foreground">Circle CCTP</span>
+              </div>
+            </div>
+
+            {/* Stacks Wallet Connection (for destination) */}
+            {!isStacksConnected && (
+              <div className="bg-card border border-border rounded-xl p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="font-medium text-foreground">Connect Stacks Wallet</p>
+                    <p className="text-sm text-muted-foreground">Required for bridging to Stacks</p>
+                  </div>
+                  <button
+                    onClick={connectStacksWallet}
+                    className="px-4 py-2 bg-primary text-primary-foreground rounded-lg font-medium hover:bg-primary/90 transition-colors"
+                  >
+                    Connect
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Connected Stacks Address */}
+            {isStacksConnected && stacksAddress && (
+              <div className="bg-card border border-border rounded-xl p-4">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-sm text-muted-foreground">Stacks Destination</p>
+                    <p className="font-mono text-sm text-foreground">
+                      {stacksAddress.slice(0, 10)}...{stacksAddress.slice(-8)}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2 text-green-500 text-sm">
+                    <div className="w-2 h-2 rounded-full bg-green-500" />
+                    Connected
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Bridge Form */}
+            <div className="bg-card/50 border border-border rounded-2xl p-6 backdrop-blur-sm">
+              <MultiChainBridgeForm 
+                isWalletConnected={isConnected}
+                stacksAddress={stacksAddress}
+              />
+            </div>
+
+            {/* Supported Chains */}
+            <div className="bg-card border border-border rounded-xl p-4">
+              <p className="text-sm font-medium text-foreground mb-3">Supported Source Chains</p>
+              <div className="flex flex-wrap gap-2">
+                {[
+                  { name: 'Base', icon: '🔵' },
+                  { name: 'Arbitrum', icon: '🔷' },
+                  { name: 'Optimism', icon: '🔴' },
+                  { name: 'Polygon', icon: '🟣' },
+                  { name: 'Avalanche', icon: '🔺' },
+                  { name: 'Linea', icon: '⬡' },
+                  { name: 'Unichain', icon: '🦄' },
+                  { name: 'Ethereum', icon: '⟠' },
+                ].map((chain) => (
+                  <div 
+                    key={chain.name}
+                    className="flex items-center gap-1.5 bg-accent/50 px-2.5 py-1 rounded-lg text-sm"
+                  >
+                    <span>{chain.icon}</span>
+                    <span className="text-muted-foreground">{chain.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* How it Works */}
+            <div className="bg-card border border-border rounded-xl p-4">
+              <p className="text-sm font-medium text-foreground mb-3">How it Works</p>
+              <div className="space-y-3">
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">1</div>
+                  <div>
+                    <p className="text-sm font-medium">Select Source Chain</p>
+                    <p className="text-xs text-muted-foreground">Choose which chain your USDC is on</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">2</div>
+                  <div>
+                    <p className="text-sm font-medium">CCTP to Ethereum</p>
+                    <p className="text-xs text-muted-foreground">Circle's CCTP bridges to Ethereum first</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3">
+                  <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">3</div>
+                  <div>
+                    <p className="text-sm font-medium">xReserve to Stacks</p>
+                    <p className="text-xs text-muted-foreground">Finally, USDC arrives on Stacks as USDCx</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Info Links */}
+            <div className="grid grid-cols-2 gap-4">
+              <a
+                href="https://www.circle.com/en/cross-chain-transfer-protocol"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-card border border-border rounded-xl p-4 hover:border-primary/50 transition-colors group"
+              >
+                <p className="font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
+                  About CCTP
+                </p>
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  Learn more
+                  <ExternalLink className="w-3 h-3" />
+                </div>
+              </a>
+              <a
+                href="https://faucet.circle.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-card border border-border rounded-xl p-4 hover:border-primary/50 transition-colors group"
+              >
+                <p className="font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
+                  Get Test USDC
+                </p>
+                <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                  Circle Faucet
+                  <ExternalLink className="w-3 h-3" />
+                </div>
+              </a>
+            </div>
+          </div>
+        </main>
+
+        {/* Footer */}
+        <footer className="border-t border-border mt-16">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex items-center justify-between text-sm text-muted-foreground">
+              <p>Powered by Circle CCTP & xReserve</p>
+              <div className="flex items-center gap-4">
+                <Link to="/" className="hover:text-foreground transition-colors">
+                  ETH → Stacks
+                </Link>
+                <Link to="/multichain" className="hover:text-foreground transition-colors">
+                  Multichain
+                </Link>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  );
+}

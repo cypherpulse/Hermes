@@ -1,6 +1,25 @@
 import { createAppKit } from '@reown/appkit/react'
 import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { sepolia } from '@reown/appkit/networks'
+import {
+  sepolia,
+  baseSepolia,
+  arbitrumSepolia,
+  optimismSepolia,
+  polygonAmoy,
+  avalancheFuji,
+  lineaSepolia,
+} from '@reown/appkit/networks'
+import { defineChain } from 'viem'
+
+// Define Unichain Sepolia (not in @reown/appkit/networks yet)
+const unichainSepolia = defineChain({
+  id: 1301,
+  name: 'Unichain Sepolia',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: { default: { http: ['https://sepolia.unichain.org'] } },
+  blockExplorers: { default: { name: 'Uniscan', url: 'https://sepolia.uniscan.xyz' } },
+  testnet: true,
+})
 
 // Get projectId from env
 const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
@@ -21,7 +40,17 @@ const metadata = {
   ]
 }
 
-const networks = [sepolia] as [typeof sepolia, ...typeof sepolia[]];
+// Define all supported testnet chains
+const networks = [
+  sepolia,
+  baseSepolia,
+  arbitrumSepolia,
+  avalancheFuji,
+  optimismSepolia,
+  polygonAmoy,
+  lineaSepolia,
+  unichainSepolia,
+];
 
 export const wagmiAdapter = new WagmiAdapter({
   ssr: false,
