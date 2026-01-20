@@ -80,7 +80,7 @@ export function ConnectWalletButton() {
       {/* Disconnect Button */}
       <button
         onClick={() => disconnect()}
-        className="p-2 rounded-xl bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 hover:border-red-500/60 transition-all duration-200 group"
+        className="hidden sm:block p-2 rounded-xl bg-red-500/10 border border-red-500/30 hover:bg-red-500/20 hover:border-red-500/60 transition-all duration-200 group"
         title="Disconnect wallet"
       >
         <LogOut className="w-4 h-4 text-red-500 group-hover:text-red-600 transition-colors" />

@@ -14,17 +14,12 @@ import { useMultiChainBridge } from '@/hooks/useMultiChainBridge';
 import { useStacksWallet } from '@/hooks/useStacksWallet';
 import { CCTP_CHAINS } from '@/lib/multichain-bridge-config';
 import { cn } from '@/lib/utils';
+import Navbar from '@/components/Navbar';
 
 export default function MultiChain() {
   const location = useLocation();
   const { isConnected } = useMultiChainBridge();
   const { stacksAddress, isConnected: isStacksConnected, connectWallet: connectStacksWallet } = useStacksWallet();
-
-  const navItems = [
-    { path: '/', label: 'Bridge' },
-    { path: '/multichain', label: 'Multichain' },
-    { path: '/transfer', label: 'Transfer USDCx' },
-  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -36,46 +31,7 @@ export default function MultiChain() {
       </div>
 
       <div className="relative z-10">
-        {/* Header */}
-        <header className="border-b border-border backdrop-blur-sm bg-background/80 sticky top-0 z-50">
-          <div className="container mx-auto px-4 py-4">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-6">
-                <Link to="/" className="flex items-center gap-3">
-                  <img 
-                    src="/logo.png" 
-                    alt="Hermes" 
-                    className="w-10 h-10 rounded-xl shadow-lg bg-white p-1"
-                  />
-                  <div>
-                    <h1 className="text-xl font-bold text-foreground tracking-tight">Hermes</h1>
-                    <p className="text-xs text-muted-foreground">Borderless Stablecoins</p>
-                  </div>
-                </Link>
-
-                {/* Navigation */}
-                <nav className="hidden md:flex items-center gap-1">
-                  {navItems.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={cn(
-                        "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
-                        location.pathname === item.path
-                          ? "bg-primary/10 text-primary"
-                          : "text-muted-foreground hover:text-foreground hover:bg-accent"
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-              
-              <ConnectWalletButton />
-            </div>
-          </div>
-        </header>
+        <Navbar />
 
         {/* Main Content */}
         <main className="container mx-auto px-4 py-12">
