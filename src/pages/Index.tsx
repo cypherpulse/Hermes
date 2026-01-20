@@ -1,11 +1,8 @@
 import { useBridge } from "@/hooks/useBridge";
-import { useStacksWallet } from "@/hooks/useStacksWallet";
 import { ConnectWalletButton } from "@/components/bridge/ConnectWalletButton";
 import { BridgeForm } from "@/components/bridge/BridgeForm";
-import { TransferForm } from "@/components/bridge/TransferForm";
 import { BalanceDisplay } from "@/components/bridge/BalanceDisplay";
-import { ExternalLink, ArrowDownUp, Send, Globe } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { ExternalLink, ArrowDownUp } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
@@ -20,20 +17,10 @@ const Index = () => {
     depositToStacks,
   } = useBridge();
 
-  const {
-    stacksAddress,
-    isConnected: isStacksConnected,
-    usdcxBalance,
-    isLoading: isStacksLoading,
-    connectWallet: connectStacksWallet,
-    disconnectWallet: disconnectStacksWallet,
-    transferUsdcx,
-    refreshBalance: refreshStacksBalance,
-  } = useStacksWallet();
-
   const navItems = [
     { path: '/', label: 'Bridge' },
     { path: '/multichain', label: 'Multichain' },
+    { path: '/transfer', label: 'Transfer USDCx' },
   ];
 
   return (
@@ -99,73 +86,27 @@ const Index = () => {
                 Blazing fast bridging between Ethereum and Stacks
               </p>
               <p className="text-xs text-muted-foreground mt-2">
-                Powered by Circle's xReserve Protocol
+                Powered by Circle & Stacks
               </p>
             </div>
 
-            {/* Tabs for Bridge / Transfer */}
-            <Tabs defaultValue="bridge" className="w-full">
-              <TabsList className="grid w-full grid-cols-2 mb-6">
-                <TabsTrigger value="bridge" className="flex items-center gap-2">
-                  <ArrowDownUp className="w-4 h-4" />
-                  Bridge
-                </TabsTrigger>
-                <TabsTrigger value="transfer" className="flex items-center gap-2">
-                  <Send className="w-4 h-4" />
-                  Transfer
-                </TabsTrigger>
-              </TabsList>
+            {/* Bridge Content */}
+            {/* Balance Display */}
+            <BalanceDisplay
+              ethBalance={ethBalance}
+              usdcBalance={usdcBalance}
+              onRefresh={refreshBalances}
+              isConnected={isEthConnected}
+            />
 
-              <TabsContent value="bridge" className="space-y-6">
-                {/* Balance Display */}
-                <BalanceDisplay
-                  ethBalance={ethBalance}
-                  usdcBalance={usdcBalance}
-                  onRefresh={refreshBalances}
-                  isConnected={isEthConnected}
-                />
-
-                {/* Bridge Form */}
-                <BridgeForm
-                  isConnected={isEthConnected}
-                  usdcBalance={usdcBalance}
-                  ethBalance={ethBalance}
-                  onApprove={approveUSDC}
-                  onDeposit={depositToStacks}
-                />
-              </TabsContent>
-
-              <TabsContent value="transfer" className="space-y-6">
-                {/* Stacks Balance Display */}
-                {isStacksConnected && (
-                  <div className="bg-card border border-border rounded-xl p-4">
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <p className="text-sm text-muted-foreground">USDCx Balance</p>
-                        <p className="text-2xl font-bold text-foreground">{parseFloat(usdcxBalance).toFixed(2)} USDCx</p>
-                      </div>
-                      <button 
-                        onClick={refreshStacksBalance}
-                        className="text-muted-foreground hover:text-foreground transition-colors"
-                      >
-                        ↻
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* Transfer Form */}
-                <TransferForm
-                  isConnected={isStacksConnected}
-                  stacksAddress={stacksAddress}
-                  usdcxBalance={usdcxBalance}
-                  onConnect={connectStacksWallet}
-                  onDisconnect={disconnectStacksWallet}
-                  onTransfer={transferUsdcx}
-                  isLoading={isStacksLoading}
-                />
-              </TabsContent>
-            </Tabs>
+            {/* Bridge Form */}
+            <BridgeForm
+              isConnected={isEthConnected}
+              usdcBalance={usdcBalance}
+              ethBalance={ethBalance}
+              onApprove={approveUSDC}
+              onDeposit={depositToStacks}
+            />
 
             {/* Info Cards */}
             <div className="grid grid-cols-2 gap-4 mt-8">
