@@ -168,8 +168,11 @@ function ChainIcon({ chain, size = 'md' }: { chain: CCTPChainConfig; size?: 'sm'
     lg: 'w-10 h-10 text-xl',
   };
 
+  // Check if icon is a URL (starts with http/https)
+  const isUrl = chain.icon.startsWith('http');
+
   return (
-    <div 
+    <div
       className={cn(
         sizeClasses[size],
         "flex items-center justify-center rounded-full",
@@ -178,7 +181,15 @@ function ChainIcon({ chain, size = 'md' }: { chain: CCTPChainConfig; size?: 'sm'
       )}
       style={{ backgroundColor: `${chain.color}20` }}
     >
-      <span>{chain.icon}</span>
+      {isUrl ? (
+        <img
+          src={chain.icon}
+          alt={chain.displayName}
+          className="w-full h-full rounded-full object-cover"
+        />
+      ) : (
+        <span>{chain.icon}</span>
+      )}
     </div>
   );
 }
@@ -188,7 +199,7 @@ export const STACKS_CHAIN = {
   id: 'Stacks' as const,
   name: 'Stacks',
   displayName: 'Stacks',
-  icon: '₿',
+  icon: 'https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768901230/download_7_pixwpt.png',
   color: '#5546FF',
 };
 
@@ -272,7 +283,15 @@ export function ChainSelectorWithStacks({
                 className="w-8 h-8 flex items-center justify-center rounded-full border border-white/10"
                 style={{ backgroundColor: `${selectedChain.color}20` }}
               >
-                <span className="text-lg">{selectedChain.icon}</span>
+                {selectedChain.icon.startsWith('http') ? (
+                  <img
+                    src={selectedChain.icon}
+                    alt={selectedChain.displayName}
+                    className="w-full h-full rounded-full object-cover"
+                  />
+                ) : (
+                  <span className="text-lg">{selectedChain.icon}</span>
+                )}
               </div>
               <p className="font-medium text-foreground">
                 {selectedChain.displayName}
@@ -307,11 +326,19 @@ export function ChainSelectorWithStacks({
                 )}
               >
                 <div className="flex items-center gap-3">
-                  <div 
+                  <div
                     className="w-8 h-8 flex items-center justify-center rounded-full border border-white/10"
                     style={{ backgroundColor: `${STACKS_CHAIN.color}20` }}
                   >
-                    <span className="text-lg">{STACKS_CHAIN.icon}</span>
+                    {STACKS_CHAIN.icon.startsWith('http') ? (
+                      <img
+                        src={STACKS_CHAIN.icon}
+                        alt={STACKS_CHAIN.displayName}
+                        className="w-full h-full rounded-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-lg">{STACKS_CHAIN.icon}</span>
+                    )}
                   </div>
                   <div className="text-left">
                     <p className="font-medium text-foreground">
