@@ -9,8 +9,10 @@ import { Link, useLocation } from 'react-router-dom';
 import { ExternalLink, ArrowLeft, Zap, Shield, Globe } from 'lucide-react';
 import { ConnectWalletButton } from '@/components/bridge/ConnectWalletButton';
 import { MultiChainBridgeForm } from '@/components/multichain/MultiChainBridgeForm';
+import { BridgeProgress } from '@/components/multichain/BridgeProgress';
 import { useMultiChainBridge } from '@/hooks/useMultiChainBridge';
 import { useStacksWallet } from '@/hooks/useStacksWallet';
+import { CCTP_CHAINS } from '@/lib/multichain-bridge-config';
 import { cn } from '@/lib/utils';
 
 export default function MultiChain() {
@@ -21,6 +23,7 @@ export default function MultiChain() {
   const navItems = [
     { path: '/', label: 'Bridge' },
     { path: '/multichain', label: 'Multichain' },
+    { path: '/transfer', label: 'Transfer USDCx' },
   ];
 
   return (
@@ -88,7 +91,7 @@ export default function MultiChain() {
                 <span className="text-gradient-bitcoin">Any Chain</span>
               </h2>
               <p className="text-muted-foreground">
-                USDC from 7+ chains to Stacks via Circle CCTP
+                Bridge USDC from 7+ chains to Stacks seamlessly
               </p>
             </div>
 
@@ -104,7 +107,7 @@ export default function MultiChain() {
               </div>
               <div className="flex items-center gap-1.5 bg-card border border-border px-3 py-1.5 rounded-full text-sm">
                 <span className="text-blue-500">◎</span>
-                <span className="text-muted-foreground">Circle CCTP</span>
+                  <span className="text-foreground font-medium">Circle Verified</span>
               </div>
             </div>
 
@@ -154,24 +157,23 @@ export default function MultiChain() {
 
             {/* Supported Chains */}
             <div className="bg-card border border-border rounded-xl p-4">
-              <p className="text-sm font-medium text-foreground mb-3">Supported Source Chains</p>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  { name: 'Base', icon: '🔵' },
-                  { name: 'Arbitrum', icon: '🔷' },
-                  { name: 'Optimism', icon: '🔴' },
-                  { name: 'Polygon', icon: '🟣' },
-                  { name: 'Avalanche', icon: '🔺' },
-                  { name: 'Linea', icon: '⬡' },
-                  { name: 'Unichain', icon: '🦄' },
-                  { name: 'Ethereum', icon: '⟠' },
-                ].map((chain) => (
-                  <div 
-                    key={chain.name}
-                    className="flex items-center gap-1.5 bg-accent/50 px-2.5 py-1 rounded-lg text-sm"
+              <p className="text-sm font-medium text-foreground mb-3">Supported Chains</p>
+              <div className="grid grid-cols-2 gap-2">
+                {Object.values(CCTP_CHAINS).map((chain) => (
+                  <div
+                    key={chain.id}
+                    className="flex items-center gap-2 bg-accent/30 hover:bg-accent/50 px-3 py-2 rounded-lg text-sm transition-colors"
                   >
-                    <span>{chain.icon}</span>
-                    <span className="text-muted-foreground">{chain.name}</span>
+                    {chain.icon.startsWith('http') ? (
+                      <img
+                        src={chain.icon}
+                        alt={chain.displayName}
+                        className="w-5 h-5 rounded-full object-cover"
+                      />
+                    ) : (
+                      <span className="text-lg">{chain.icon}</span>
+                    )}
+                    <span className="text-muted-foreground font-medium">{chain.displayName}</span>
                   </div>
                 ))}
               </div>
@@ -191,15 +193,15 @@ export default function MultiChain() {
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">2</div>
                   <div>
-                    <p className="text-sm font-medium">CCTP to Ethereum</p>
-                    <p className="text-xs text-muted-foreground">Circle's CCTP bridges to Ethereum first</p>
+                    <p className="text-sm font-medium">Secure Transfer</p>
+                    <p className="text-xs text-muted-foreground">Your USDC is safely transferred across chains</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
                   <div className="w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center text-xs font-bold text-primary">3</div>
                   <div>
-                    <p className="text-sm font-medium">xReserve to Stacks</p>
-                    <p className="text-xs text-muted-foreground">Finally, USDC arrives on Stacks as USDCx</p>
+                    <p className="text-sm font-medium">Arrive on Stacks</p>
+                    <p className="text-xs text-muted-foreground">Your USDC arrives instantly on Stacks</p>
                   </div>
                 </div>
               </div>
@@ -208,16 +210,16 @@ export default function MultiChain() {
             {/* Info Links */}
             <div className="grid grid-cols-2 gap-4">
               <a
-                href="https://www.circle.com/en/cross-chain-transfer-protocol"
+                href="https://sepoliafaucet.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-card border border-border rounded-xl p-4 hover:border-primary/50 transition-colors group"
               >
                 <p className="font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
-                  About CCTP
+                  Get Test ETH
                 </p>
                 <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                  Learn more
+                  Sepolia Faucet
                   <ExternalLink className="w-3 h-3" />
                 </div>
               </a>
@@ -243,7 +245,7 @@ export default function MultiChain() {
         <footer className="border-t border-border mt-16">
           <div className="container mx-auto px-4 py-6">
             <div className="flex items-center justify-between text-sm text-muted-foreground">
-              <p>Powered by Circle CCTP & xReserve</p>
+              <p>Powered by Circle & Stacks</p>
               <div className="flex items-center gap-4">
                 <Link to="/" className="hover:text-foreground transition-colors">
                   ETH → Stacks
