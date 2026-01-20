@@ -292,8 +292,8 @@ export function useMultiChainBridge() {
     const steps: BridgeStep[] = [
       {
         id: 'cctp-bridge',
-        name: 'CCTP Bridge',
-        description: `Bridge USDC from ${sourceChain.displayName} to Ethereum`,
+        name: 'Cross-Chain Transfer',
+        description: `Transfer USDC from ${sourceChain.displayName} to Ethereum`,
         status: 'pending',
       },
       {
@@ -305,13 +305,13 @@ export function useMultiChainBridge() {
       {
         id: 'approve-usdc',
         name: 'Approve USDC',
-        description: 'Approve xReserve to spend USDC',
+        description: 'Approve spending USDC for transfer',
         status: 'pending',
       },
       {
         id: 'xreserve-bridge',
-        name: 'xReserve Bridge',
-        description: 'Bridge USDC from Ethereum to Stacks',
+        name: 'Final Transfer',
+        description: 'Complete transfer to Stacks',
         status: 'pending',
       },
     ];
@@ -419,8 +419,13 @@ export function useMultiChainBridge() {
 
       const value = parseUnits(amount, 6);
 
-      // Check current allowance
-      const allowance = await publicClient.readContract({
+      // Check current allowance using Sepolia client
+      const sepoliaClient = createPublicClient({
+        chain: sepolia,
+        transport: http(),
+      });
+      
+      const allowance = await sepoliaClient.readContract({
         address: BRIDGE_CONFIG.ETH_USDC_CONTRACT as Address,
         abi: ERC20_ABI,
         functionName: 'allowance',
@@ -437,7 +442,10 @@ export function useMultiChainBridge() {
           account: address,
         });
 
-        await publicClient.waitForTransactionReceipt({ hash: approveHash });
+        await sepoliaClient.waitForTransactionReceipt({ 
+          hash: approveHash,
+          timeout: 120000, // 2 minutes timeout
+        });
         
         updateStep(2, { 
           status: 'completed', 
@@ -544,8 +552,13 @@ export function useMultiChainBridge() {
       // Step 1: Approve
       updateStep(0, { status: 'in-progress' });
 
-      // Check current allowance
-      const allowance = await publicClient.readContract({
+      // Check current allowance using Sepolia client
+      const sepoliaClient = createPublicClient({
+        chain: sepolia,
+        transport: http(),
+      });
+      
+      const allowance = await sepoliaClient.readContract({
         address: BRIDGE_CONFIG.ETH_USDC_CONTRACT as Address,
         abi: ERC20_ABI,
         functionName: 'allowance',
@@ -562,7 +575,10 @@ export function useMultiChainBridge() {
           account: address,
         });
 
-        await publicClient.waitForTransactionReceipt({ hash: approveHash });
+        await sepoliaClient.waitForTransactionReceipt({ 
+          hash: approveHash,
+          timeout: 120000, // 2 minutes timeout
+        });
         
         updateStep(0, { 
           status: 'completed', 
@@ -628,6 +644,11 @@ export function useMultiChainBridge() {
     }
 
     try {
+      const sepoliaClient = createPublicClient({
+        chain: sepolia,
+        transport: http(),
+      });
+      
       const value = parseUnits(amount, 6);
       const maxFee = parseUnits('0', 6);
       const remoteRecipient = encodeStacksAddress(stacksRecipient);
@@ -653,7 +674,10 @@ export function useMultiChainBridge() {
         account: address,
       });
 
-      await publicClient.waitForTransactionReceipt({ hash });
+      await sepoliaClient.waitForTransactionReceipt({ 
+        hash,
+        timeout: 120000, // 2 minutes timeout
+      });
 
       console.log('xReserve TX Hash:', hash);
       return { success: true, txHash: hash };
@@ -687,8 +711,8 @@ export function useMultiChainBridge() {
     const steps: BridgeStep[] = [
       {
         id: 'cctp-bridge',
-        name: 'CCTP Bridge',
-        description: `Bridge USDC from ${sourceChain.displayName} to ${destChain.displayName}`,
+        name: 'Cross-Chain Transfer',
+        description: `Transfer USDC from ${sourceChain.displayName} to ${destChain.displayName}`,
         status: 'pending',
       },
     ];
