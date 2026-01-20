@@ -80,7 +80,11 @@ const Transfer = () => {
             {/* Hero Section */}
             <div className="text-center mb-8">
               <div className="flex items-center justify-center gap-3 mb-3">
-                <Send className="w-8 h-8 text-primary" />
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768901230/download_7_pixwpt.png"
+                  alt="Stacks Logo"
+                  className="w-8 h-8 rounded-full shadow-lg"
+                />
                 <h2 className="text-4xl font-bold text-foreground">Transfer</h2>
               </div>
               <p className="text-muted-foreground text-lg">
