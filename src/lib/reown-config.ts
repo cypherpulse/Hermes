@@ -19,7 +19,16 @@ const unichainSepolia = defineChain({
   rpcUrls: { default: { http: ['https://sepolia.unichain.org'] } },
   blockExplorers: { default: { name: 'Uniscan', url: 'https://sepolia.uniscan.xyz' } },
   testnet: true,
-})
+});
+
+const arcSepolia = defineChain({
+  id: 5042002,
+  name: 'Arc Sepolia',
+  nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 6 },
+  rpcUrls: { default: { http: ['https://rpc.testnet.arc.network'] } },
+  blockExplorers: { default: { name: 'ArcScan', url: 'https://testnet.arcscan.app' } },
+  testnet: true,
+});
 
 // Get projectId from env
 const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
@@ -50,6 +59,7 @@ const networks = [
   polygonAmoy,
   lineaSepolia,
   unichainSepolia,
+  arcSepolia,
 ];
 
 export const wagmiAdapter = new WagmiAdapter({
