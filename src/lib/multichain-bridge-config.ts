@@ -15,7 +15,8 @@ export type CCTPChainId =
   | 'Optimism_Sepolia'
   | 'Polygon_Amoy_Testnet'
   | 'Linea_Sepolia'
-  | 'Unichain_Sepolia';
+  | 'Unichain_Sepolia'
+  | 'Arc_Testnet';
 
 export interface CCTPChainConfig {
   id: CCTPChainId;
@@ -32,6 +33,18 @@ export interface CCTPChainConfig {
 
 // Supported CCTP Testnet chains for Bridge Kit
 export const CCTP_CHAINS: Record<CCTPChainId, CCTPChainConfig> = {
+    Arc_Testnet: {
+      id: 'Arc_Testnet',
+      name: 'Arc Testnet',
+      displayName: 'Arc',
+      chainId: 5042002,
+      icon: 'https://res.cloudinary.com/dbczn8b8l/image/upload/v1769026854/gkzp400sdnxpucyctjnf.jpg',
+      rpcUrl: 'https://rpc.testnet.arc.network',
+      blockExplorer: 'https://testnet.arcscan.app',
+      usdcAddress: '0x3600000000000000000000000000000000000000',
+      isTestnet: true,
+      color: '#1A73E8',
+    },
   Ethereum_Sepolia: {
     id: 'Ethereum_Sepolia',
     name: 'Ethereum Sepolia',
@@ -160,6 +173,7 @@ export const BRIDGE_KIT_CHAIN_NAMES: Record<CCTPChainId, string> = {
   Polygon_Amoy_Testnet: 'Polygon_Amoy_Testnet',
   Linea_Sepolia: 'Linea_Sepolia',
   Unichain_Sepolia: 'Unichain_Sepolia',
+  Arc_Testnet: 'Arc_Testnet',
 };
 
 // Bridge step types
@@ -184,6 +198,14 @@ export interface MultichainBridgeResult {
 
 // Wagmi chain configurations
 export const WAGMI_CHAIN_CONFIG = {
+    Arc_Testnet: {
+      id: 5042002,
+      name: 'Arc Testnet',
+      nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 6 },
+      rpcUrls: { default: { http: ['https://rpc.testnet.arc.network'] } },
+      blockExplorers: { default: { name: 'ArcScan', url: 'https://testnet.arcscan.app' } },
+      testnet: true,
+    },
   Base_Sepolia: {
     id: 84532,
     name: 'Base Sepolia',
