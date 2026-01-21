@@ -61,7 +61,7 @@ and the authors disclaim all liability for damages arising from such uses:
 
 SECURITY NOTICE
 
-- This software is provided for educational and development purposes.
+- This software is provided for the purpose of enabling multichain stablecoin bridging and cross-chain USDC transfers. It is intended for use in decentralized finance (DeFi) applications, integrations, and production deployments. This is not an educational tool or demo; it is a production-grade bridge for stablecoin interoperability across supported blockchains.
 - Users should verify all transaction details before signing.
 - Never share your private keys or seed phrases.
 - The authors recommend thorough security audits before production use.
