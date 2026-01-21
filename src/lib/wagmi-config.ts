@@ -27,6 +27,19 @@ const unichainSepolia = defineChain({
   testnet: true,
 });
 
+const arcSepolia = defineChain({
+  id: 5042002,
+  name: 'Arc Sepolia',
+  nativeCurrency: { name: 'USDC', symbol: 'USDC', decimals: 6 },
+  rpcUrls: {
+    default: { http: ['https://rpc.testnet.arc.network'] },
+  },
+  blockExplorers: {
+    default: { name: 'ArcScan', url: 'https://testnet.arcscan.app' },
+  },
+  testnet: true,
+});
+
 export const config = getDefaultConfig({
   appName: 'Hermes Bridge',
   projectId,
@@ -39,6 +52,7 @@ export const config = getDefaultConfig({
     avalancheFuji,
     lineaSepolia,
     unichainSepolia,
+    arcSepolia,
   ],
   ssr: false,
 });
