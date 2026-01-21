@@ -5,7 +5,7 @@
 <h1 align="center">Hermes Bridge</h1>
 
 <p align="center">
-  <strong>Bridge USDC from Ethereum to Stacks & Transfer USDCx Seamlessly</strong>
+  <strong>Bridge USDC across Ethereum, Ethereum L2s, and Stacks — Multichain Stablecoin Transfers</strong>
 </p>
 
 
@@ -26,7 +26,11 @@
 </p>
 
 <p align="center">
-  Hermes Bridge is a secure, production-ready cross-chain bridge enabling seamless USDC transfers between Ethereum and Stacks blockchains. It provides two core functionalities: (1) Bridge USDC from Ethereum to USDCx on Stacks via Circle's trusted xReserve protocol, and (2) Transfer USDCx between Stacks addresses with full custody and control. 
+  Hermes Bridge is a secure, production-ready multichain bridge enabling seamless USDC transfers between Ethereum, major Ethereum L2s (Arbitrum, Optimism, Base, Polygon, Avalanche, Linea, Unichain, Arc), and Stacks blockchains. It provides:
+  <ul>
+    <li><b>Multichain Bridge:</b> Bridge USDC between Ethereum, L2s, and Stacks using Circle's trusted xReserve protocol and CCTP (Cross-Chain Transfer Protocol).</li>
+    <li><b>Stacks Transfers:</b> Transfer USDCx between Stacks addresses with full custody and control.</li>
+  </ul>
 </p>
 
 <p align="center">
@@ -57,7 +61,7 @@
   - [Transfer Module](#transfer-module)
   - [Platform Features](#platform-features)
 - [Bridge vs Transfer](#bridge-vs-transfer)
-  - [When to Bridge (USDC → USDCx)](#when-to-bridge-usdc--usdcx)
+  - [When to Bridge (USDC Multichain)](#when-to-bridge-usdc-multichain)
   - [When to Transfer (USDCx → USDCx)](#when-to-transfer-usdcx--usdcx)
 - [Use Cases](#use-cases)
   - [Use Case 1: Ethereum User Entering Stacks](#use-case-1-ethereum-user-entering-stacks)
@@ -119,7 +123,7 @@
 ### Bridge Module
 | Feature | Description |
 |---------|-------------|
-| **USDC → USDCx Bridge** | Atomic cross-chain transfers from Ethereum to Stacks |
+| **USDC Multichain Bridge** | Atomic cross-chain transfers between Ethereum, L2s, and Stacks |
 | **Circle xReserve Integration** | Industry-standard attestation-based bridging |
 | **Approval-based Flow** | Secure two-step process (approve, then deposit) |
 | **Address Encoding** | Automatic Stacks address encoding for Ethereum contracts |
@@ -138,7 +142,7 @@
 | Feature | Description |
 |---------|-------------|
 | **Multi-Wallet Support** | MetaMask, Coinbase Wallet, WalletConnect, Leather |
-| **Dual-Chain Interface** | Unified UI for both Ethereum and Stacks operations |
+| **Multichain Interface** | Unified UI for Ethereum, L2s, and Stacks operations |
 | **Real-Time Tracking** | Live transaction status and balance updates |
 | **Modern UI/UX** | Beautiful, responsive interface with dark mode |
 | **Optimized Performance** | Built with Vite for blazing fast load times |
@@ -148,19 +152,19 @@
 
 ## Bridge vs Transfer
 
-### When to Bridge (USDC → USDCx)
+### When to Bridge (USDC Multichain)
 
 **Use the Bridge feature when:**
-- You want to move USDC from Ethereum to Stacks
-- You need to access Stacks DeFi opportunities
-- Converting stablecoins to USDCx for cross-chain operations
-- Leveraging Circle's attestation infrastructure
+- You want to move USDC between Ethereum, L2s (Arbitrum, Optimism, Base, Polygon, Avalanche, Linea, Unichain, Arc), and Stacks
+- You need to access DeFi opportunities across multiple chains
+- Converting stablecoins for cross-chain operations
+- Leveraging Circle's attestation infrastructure and CCTP
 
 **Bridge Characteristics:**
-- Requires ETH in wallet for gas fees
+- Requires native gas token (ETH, MATIC, AVAX, etc.) for source chain
 - 5-30 minute attestation window
 - Atomic transaction: approve + deposit in one flow
-- Powered by Circle's xReserve contract
+- Powered by Circle's xReserve and CCTP contracts
 - Addresses are encoded for cross-chain compatibility
 
 ### When to Transfer (USDCx → USDCx)
