@@ -69,16 +69,16 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-background border-t border-border shadow-lg">
-          <div className="container mx-auto px-4 py-4">
-            <nav className="flex flex-col gap-2">
+        <div className="md:hidden fixed inset-0 top-0 left-0 w-full h-full bg-background/95 z-[9999] animate-fade-in flex flex-col">
+          <div className="container mx-auto px-4 py-8 flex-1 flex flex-col justify-start">
+            <nav className="flex flex-col gap-4 mt-8">
               {navItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
                   onClick={() => setIsMenuOpen(false)}
                   className={cn(
-                    "px-4 py-2 rounded-lg text-sm font-medium transition-colors",
+                    "px-6 py-4 rounded-xl text-lg font-semibold transition-colors text-center",
                     location.pathname === item.path
                       ? "bg-primary/10 text-primary"
                       : "text-muted-foreground hover:text-foreground hover:bg-accent"

@@ -5,6 +5,7 @@ import { Send } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import Navbar from "@/components/Navbar";
+import { Footer } from '@/components/Footer';
 
 const Transfer = () => {
   const {
@@ -19,18 +20,18 @@ const Transfer = () => {
   } = useStacksWallet();
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen flex flex-col bg-background">
       {/* Background gradient effects */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-primary/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 flex flex-col flex-1">
         <Navbar />
 
         {/* Main Content */}
-        <main className="container mx-auto px-4 py-12">
+        <main className="container mx-auto px-4 py-12 flex-1">
           <div className="max-w-lg mx-auto space-y-6">
             {/* Hero Section */}
             <div className="text-center mb-8">
@@ -89,25 +90,7 @@ const Transfer = () => {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-border bg-card/50 backdrop-blur-sm py-6 mt-auto">
-          <div className="container mx-auto px-4 text-center space-y-3">
-            <p className="text-sm text-muted-foreground">
-              Powered by Circle & Stacks
-            </p>
-            <div className="flex items-center justify-center">
-              <code
-                className="bg-secondary px-3 py-2 rounded text-primary cursor-pointer hover:bg-secondary/80 transition-colors text-xs"
-                onClick={() => {
-                  navigator.clipboard.writeText('SP2F70QJ9J57YSSZE76KC1A3X718ADXSZPG8581EP');
-                  alert('Address copied!');
-                }}
-                title="Click to copy donation address"
-              >
-                SP2F70QJ9J57YSSZE76KC1A3X718ADXSZPG8581EP
-              </code>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );

@@ -15,6 +15,7 @@ import { useStacksWallet } from '@/hooks/useStacksWallet';
 import { CCTP_CHAINS } from '@/lib/multichain-bridge-config';
 import { cn } from '@/lib/utils';
 import Navbar from '@/components/Navbar';
+import { Footer } from '@/components/Footer';
 
 export default function MultiChain() {
   const location = useLocation();
@@ -198,21 +199,7 @@ export default function MultiChain() {
         </main>
 
         {/* Footer */}
-        <footer className="border-t border-border mt-16">
-          <div className="container mx-auto px-4 py-6">
-            <div className="flex items-center justify-between text-sm text-muted-foreground">
-              <p>Powered by Circle & Stacks</p>
-              <div className="flex items-center gap-4">
-                <Link to="/" className="hover:text-foreground transition-colors">
-                  ETH → Stacks
-                </Link>
-                <Link to="/multichain" className="hover:text-foreground transition-colors">
-                  Multichain
-                </Link>
-              </div>
-            </div>
-          </div>
-        </footer>
+        <Footer />
       </div>
     </div>
   );

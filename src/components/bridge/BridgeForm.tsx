@@ -133,7 +133,7 @@ export function BridgeForm({
         case 'attesting':
           return { 
             label: 'Attestation in Progress', 
-            description: 'Circle attestation service is processing...',
+            description: '',
             progress: 50,
             color: 'text-yellow-500'
           };
@@ -275,15 +275,17 @@ export function BridgeForm({
             <div className="w-16 h-16 mx-auto mb-4 rounded-full gradient-bitcoin flex items-center justify-center">
               <CheckCircle2 className="w-8 h-8 text-primary-foreground" />
             </div>
-            <h3 className="text-2xl font-bold text-foreground mb-2">Bridge Initiated!</h3>
+            <h3 className="text-2xl font-bold text-green-600 dark:text-green-400 mb-2 flex items-center justify-center gap-2">
+              <span>Bridge Successful!</span>
+            </h3>
             <p className="text-muted-foreground mb-4">
-              Your {amount} USDC has been deposited to xReserve. 
+              Your {amount} USDC has been <span className="text-green-600 dark:text-green-400 font-semibold">bridged to Stacks</span>.
             </p>
-            <div className="bg-yellow-500/10 border border-yellow-500/30 rounded-xl p-4 mb-6 text-left">
-              <p className="text-yellow-500 font-medium text-sm mb-2">⏳ Waiting for Stacks Attestation</p>
-              <p className="text-yellow-500/80 text-xs">
-                The Stacks attestation service will detect your deposit and mint USDCx to your address. 
-                This can take <strong>5-30 minutes</strong> on testnet.
+            <div className="bg-green-500/10 border border-green-500/30 rounded-xl p-4 mb-6 text-left">
+              <p className="text-green-600 dark:text-green-400 font-medium text-sm mb-2">✅ Bridge completed in <span className="font-mono">{bridgeStatus.formatElapsedTime(bridgeStatus.elapsedTime)}</span></p>
+              <p className="text-green-700 dark:text-green-300 text-xs">
+                The Stacks attestation service detected your deposit and minted USDCx to your address.<br/>
+                <span className="font-semibold">All steps completed successfully!</span>
               </p>
             </div>
             <div className="bg-secondary rounded-xl p-4 mb-4">

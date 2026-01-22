@@ -56,19 +56,6 @@ export function ConnectWalletButton() {
               <span className="block text-xs text-gray-600 dark:text-gray-300 mt-1">Choose a network to connect</span>
             </div>
             <button
-              className="flex items-center gap-4 w-full text-left px-3 py-3 my-1 rounded-2xl bg-white/80 dark:bg-slate-800/80 hover:bg-orange-50 dark:hover:bg-slate-800 border border-transparent hover:border-orange-300 dark:hover:border-orange-500 shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-orange-400"
-              onClick={() => {
-                setShowDropdown(false);
-                appKit.open();
-              }}
-            >
-              <img src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900941/download_6_b0zu0z.png" alt="Ethereum" className="w-10 h-10 rounded-full border border-orange-200 dark:border-slate-700 bg-white shadow-sm" />
-              <div className="flex flex-col min-w-0">
-                <span className="font-semibold text-base text-orange-700 dark:text-orange-200 truncate">Ethereum</span>
-                <span className="text-xs text-gray-600 dark:text-gray-300 truncate">MetaMask, Coinbase...</span>
-              </div>
-            </button>
-            <button
               className="flex items-center gap-4 w-full text-left px-3 py-3 my-1 rounded-2xl bg-white/80 dark:bg-slate-800/80 hover:bg-indigo-50 dark:hover:bg-indigo-900 border border-transparent hover:border-indigo-300 dark:hover:border-indigo-500 shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-indigo-400"
               onClick={() => {
                 setShowDropdown(false);
@@ -79,6 +66,19 @@ export function ConnectWalletButton() {
               <div className="flex flex-col min-w-0">
                 <span className="font-semibold text-base text-indigo-700 dark:text-indigo-200 truncate">Stacks</span>
                 <span className="text-xs text-gray-600 dark:text-gray-300 truncate">Leather, Hiro...</span>
+              </div>
+            </button>
+            <button
+              className="flex items-center gap-4 w-full text-left px-3 py-3 my-1 rounded-2xl bg-white/80 dark:bg-slate-800/80 hover:bg-orange-50 dark:hover:bg-slate-800 border border-transparent hover:border-orange-300 dark:hover:border-orange-500 shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-orange-400"
+              onClick={() => {
+                setShowDropdown(false);
+                appKit.open();
+              }}
+            >
+              <img src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900941/download_6_b0zu0z.png" alt="Ethereum" className="w-10 h-10 rounded-full border border-orange-200 dark:border-slate-700 bg-white shadow-sm" />
+              <div className="flex flex-col min-w-0">
+                <span className="font-semibold text-base text-orange-700 dark:text-orange-200 truncate">Ethereum</span>
+                <span className="text-xs text-gray-600 dark:text-gray-300 truncate">MetaMask, Coinbase...</span>
               </div>
             </button>
           </div>
