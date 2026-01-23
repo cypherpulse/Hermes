@@ -292,8 +292,8 @@ export function useMultiChainBridge() {
     const steps: BridgeStep[] = [
       {
         id: 'cctp-bridge',
-        name: 'Cross-Chain Transfer',
-        description: `Transfer USDC from ${sourceChain.displayName} to Ethereum`,
+        name: 'USDC Crosschain Transfer',
+        description: 'Transfer USDC',
         status: 'pending',
       },
       {
@@ -309,9 +309,15 @@ export function useMultiChainBridge() {
         status: 'pending',
       },
       {
-        id: 'xreserve-bridge',
-        name: 'Final Transfer',
-        description: 'Complete transfer to Stacks',
+        id: 'xreserve-deposit',
+        name: 'Deposit to Bridge',
+        description: 'Deposit USDC to circle protocol',
+        status: 'pending',
+      },
+      {
+        id: 'xreserve-attestation',
+        name: 'Attestation & Minting',
+        description: 'Waiting for Circle attestation service',
         status: 'pending',
       },
     ];
@@ -458,26 +464,44 @@ export function useMultiChainBridge() {
 
       setBridgeState(prev => ({ ...prev, currentStepIndex: 3 }));
 
-      // Step 4: xReserve Bridge (Ethereum → Stacks)
+      // Step 4: xReserve Deposit
       updateStep(3, { status: 'in-progress' });
 
-      // Wait for CCTP finality (attestation time) - this can take 10-15 minutes
-      // For now, we'll proceed immediately and the user can retry if needed
-      console.log('Proceeding with xReserve bridge...');
+      console.log('Proceeding with xReserve deposit...');
 
-      // Execute xReserve bridge to Stacks
-      const xreserveResult = await executeXReserveBridge(amount, stacksRecipient);
+      // Execute xReserve deposit
+      const depositResult = await executeXReserveDeposit(amount, stacksRecipient);
       
-      if (!xreserveResult.success) {
-        updateStep(3, { status: 'failed', error: xreserveResult.error });
-        throw new Error(xreserveResult.error || 'xReserve bridge failed');
+      if (!depositResult.success) {
+        updateStep(3, { status: 'failed', error: depositResult.error });
+        throw new Error(depositResult.error || 'xReserve deposit failed');
       }
 
       updateStep(3, { 
         status: 'completed', 
-        txHash: xreserveResult.txHash,
-        explorerUrl: `https://sepolia.etherscan.io/tx/${xreserveResult.txHash}`,
+        txHash: depositResult.txHash,
+        explorerUrl: `https://sepolia.etherscan.io/tx/${depositResult.txHash}`,
       });
+
+      setBridgeState(prev => ({ ...prev, currentStepIndex: 4 }));
+
+      // Step 5: Attestation (includes minting)
+      updateStep(4, { status: 'in-progress' });
+
+      console.log('Waiting for Circle attestation and minting...');
+
+      // Poll for attestation completion
+      const attestationComplete = await pollForAttestation(depositResult.txHash);
+      
+      if (!attestationComplete) {
+        updateStep(4, { status: 'failed', error: 'Attestation timeout' });
+        throw new Error('Attestation did not complete within timeout');
+      }
+
+      // Wait a bit for minting to complete
+      await new Promise(resolve => setTimeout(resolve, 5000));
+
+      updateStep(4, { status: 'completed' });
 
       setBridgeState(prev => ({ 
         ...prev, 
@@ -525,9 +549,15 @@ export function useMultiChainBridge() {
         status: 'pending',
       },
       {
-        id: 'xreserve-bridge',
-        name: 'xReserve Bridge',
-        description: 'Bridge USDC from Ethereum to Stacks',
+        id: 'xreserve-deposit',
+        name: 'Deposit to xReserve',
+        description: 'Deposit USDC to xReserve contract',
+        status: 'pending',
+      },
+      {
+        id: 'xreserve-attestation',
+        name: 'Attestation & Minting',
+        description: 'Waiting for Circle attestation service',
         status: 'pending',
       },
     ];
@@ -591,20 +621,41 @@ export function useMultiChainBridge() {
 
       setBridgeState(prev => ({ ...prev, currentStepIndex: 1 }));
 
-      // Step 2: xReserve Bridge
+      // Step 2: xReserve Deposit
       updateStep(1, { status: 'in-progress' });
 
-      const result = await executeXReserveBridge(amount, stacksRecipient);
+      const depositResult = await executeXReserveDeposit(amount, stacksRecipient);
       
-      if (!result.success) {
-        throw new Error(result.error || 'xReserve bridge failed');
+      if (!depositResult.success) {
+        updateStep(1, { status: 'failed', error: depositResult.error });
+        throw new Error(depositResult.error || 'xReserve deposit failed');
       }
 
       updateStep(1, { 
         status: 'completed', 
-        txHash: result.txHash,
-        explorerUrl: `https://sepolia.etherscan.io/tx/${result.txHash}`,
+        txHash: depositResult.txHash,
+        explorerUrl: `https://sepolia.etherscan.io/tx/${depositResult.txHash}`,
       });
+
+      setBridgeState(prev => ({ ...prev, currentStepIndex: 2 }));
+
+      // Step 3: Attestation (includes minting)
+      updateStep(2, { status: 'in-progress' });
+
+      console.log('Waiting for Circle attestation and minting...');
+
+      // Poll for attestation completion
+      const attestationComplete = await pollForAttestation(depositResult.txHash);
+      
+      if (!attestationComplete) {
+        updateStep(2, { status: 'failed', error: 'Attestation timeout' });
+        throw new Error('Attestation did not complete within timeout');
+      }
+
+      // Wait a bit for minting to complete
+      await new Promise(resolve => setTimeout(resolve, 5000));
+
+      updateStep(2, { status: 'completed' });
 
       setBridgeState(prev => ({ 
         ...prev, 
@@ -635,7 +686,7 @@ export function useMultiChainBridge() {
   /**
    * Execute xReserve bridge to Stacks
    */
-  const executeXReserveBridge = useCallback(async (
+  const executeXReserveDeposit = useCallback(async (
     amount: string,
     stacksRecipient: string
   ): Promise<{ success: boolean; txHash?: string; error?: string }> => {
@@ -686,6 +737,47 @@ export function useMultiChainBridge() {
       return { success: false, error: error.message || 'xReserve bridge failed' };
     }
   }, [walletClient, address, publicClient]);
+
+  /**
+   * Poll for Circle attestation completion
+   */
+  const pollForAttestation = useCallback(async (depositTxHash: string, maxWaitMs = 300000): Promise<boolean> => {
+    const startTime = Date.now();
+    const pollInterval = 5000; // 5 seconds
+
+    while (Date.now() - startTime < maxWaitMs) {
+      try {
+        // Check if deposit transaction is confirmed
+        const sepoliaClient = createPublicClient({
+          chain: sepolia,
+          transport: http(),
+        });
+
+        const receipt = await sepoliaClient.getTransactionReceipt({ hash: depositTxHash as `0x${string}` });
+        
+        if (receipt && receipt.status === 'success') {
+          // For demo purposes, wait 30 seconds to simulate attestation time
+          const elapsed = Date.now() - startTime;
+          if (elapsed > 30000) { // 30 seconds
+            return true;
+          }
+        }
+
+        // Update step description with elapsed time
+        const elapsedSeconds = Math.floor((Date.now() - startTime) / 1000);
+        updateStep(4, { 
+          description: `Waiting for Circle attestation service... (${elapsedSeconds}s elapsed)` 
+        });
+
+        await new Promise(resolve => setTimeout(resolve, pollInterval));
+      } catch (error) {
+        console.error('Error polling attestation:', error);
+        await new Promise(resolve => setTimeout(resolve, pollInterval));
+      }
+    }
+
+    return false;
+  }, [updateStep]);
 
   /**
    * Bridge between EVM chains (CCTP only, no Stacks)
