@@ -90,7 +90,7 @@ export function BridgeProgress({
         <Alert className="bg-green-500/10 border-green-500/20">
           <CheckCircle2 className="h-4 w-4 text-green-500" />
           <AlertDescription className="text-green-500">
-            Bridge completed successfully! Your USDC should arrive shortly.
+            Bridge completed successfully! Your USDC should arrive in 10 to 20 minutes.
           </AlertDescription>
         </Alert>
       )}
