@@ -30,6 +30,15 @@ const arcSepolia = defineChain({
   testnet: true,
 });
 
+const worldChainSepolia = defineChain({
+  id: 4801,
+  name: 'World Chain Sepolia',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: { default: { http: ['https://worldchain-sepolia.g.alchemy.com/public'] } },
+  blockExplorers: { default: { name: 'World Chain Explorer', url: 'https://worldchain-sepolia.explorer.alchemy.com' } },
+  testnet: true,
+});
+
 // Get projectId from env
 const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
 
@@ -60,6 +69,7 @@ const networks = [
   lineaSepolia,
   unichainSepolia,
   arcSepolia,
+  worldChainSepolia,
 ];
 
 export const wagmiAdapter = new WagmiAdapter({
