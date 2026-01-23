@@ -40,6 +40,19 @@ const arcSepolia = defineChain({
   testnet: true,
 });
 
+const worldChainSepolia = defineChain({
+  id: 4801,
+  name: 'World Chain Sepolia',
+  nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  rpcUrls: {
+    default: { http: ['https://worldchain-sepolia.g.alchemy.com/public'] },
+  },
+  blockExplorers: {
+    default: { name: 'World Chain Explorer', url: 'https://worldchain-sepolia.explorer.alchemy.com' },
+  },
+  testnet: true,
+});
+
 export const config = getDefaultConfig({
   appName: 'Hermes Bridge',
   projectId,
@@ -53,6 +66,7 @@ export const config = getDefaultConfig({
     lineaSepolia,
     unichainSepolia,
     arcSepolia,
+    worldChainSepolia,
   ],
   ssr: false,
 });
