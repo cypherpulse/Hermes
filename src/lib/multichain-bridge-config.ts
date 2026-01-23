@@ -16,7 +16,8 @@ export type CCTPChainId =
   | 'Polygon_Amoy_Testnet'
   | 'Linea_Sepolia'
   | 'Unichain_Sepolia'
-  | 'Arc_Testnet';
+  | 'Arc_Testnet'
+  | 'World_Chain_Sepolia';
 
 export interface CCTPChainConfig {
   id: CCTPChainId;
@@ -33,18 +34,6 @@ export interface CCTPChainConfig {
 
 // Supported CCTP Testnet chains for Bridge Kit
 export const CCTP_CHAINS: Record<CCTPChainId, CCTPChainConfig> = {
-    Arc_Testnet: {
-      id: 'Arc_Testnet',
-      name: 'Arc Testnet',
-      displayName: 'Arc',
-      chainId: 5042002,
-      icon: 'https://res.cloudinary.com/dbczn8b8l/image/upload/v1769026854/gkzp400sdnxpucyctjnf.jpg',
-      rpcUrl: 'https://rpc.testnet.arc.network',
-      blockExplorer: 'https://testnet.arcscan.app',
-      usdcAddress: '0x3600000000000000000000000000000000000000',
-      isTestnet: true,
-      color: '#1A73E8',
-    },
   Ethereum_Sepolia: {
     id: 'Ethereum_Sepolia',
     name: 'Ethereum Sepolia',
@@ -57,7 +46,7 @@ export const CCTP_CHAINS: Record<CCTPChainId, CCTPChainConfig> = {
     isTestnet: true,
     color: '#627EEA',
   },
-  Base_Sepolia: {
+    Base_Sepolia: {
     id: 'Base_Sepolia',
     name: 'Base Sepolia',
     displayName: 'Base',
@@ -81,6 +70,18 @@ export const CCTP_CHAINS: Record<CCTPChainId, CCTPChainConfig> = {
     isTestnet: true,
     color: '#28A0F0',
   },
+  Arc_Testnet: {
+      id: 'Arc_Testnet',
+      name: 'Arc Testnet',
+      displayName: 'Arc',
+      chainId: 5042002,
+      icon: 'https://res.cloudinary.com/dbczn8b8l/image/upload/v1769026854/gkzp400sdnxpucyctjnf.jpg',
+      rpcUrl: 'https://rpc.testnet.arc.network',
+      blockExplorer: 'https://testnet.arcscan.app',
+      usdcAddress: '0x3600000000000000000000000000000000000000',
+      isTestnet: true,
+      color: '#1A73E8',
+    },
   Avalanche_Fuji: {
     id: 'Avalanche_Fuji',
     name: 'Avalanche Fuji',
@@ -141,6 +142,18 @@ export const CCTP_CHAINS: Record<CCTPChainId, CCTPChainConfig> = {
     isTestnet: true,
     color: '#FF007A',
   },
+  World_Chain_Sepolia: {
+    id: 'World_Chain_Sepolia',
+    name: 'World Chain Sepolia',
+    displayName: 'World Chain',
+    chainId: 4801,
+    icon: 'https://res.cloudinary.com/dg5rr4ntw/image/upload/v1769169925/worldcoin_mvuyxj.jpg',
+    rpcUrl: 'https://worldchain-sepolia.g.alchemy.com/public',
+    blockExplorer: 'https://worldchain-sepolia.explorer.alchemy.com',
+    usdcAddress: '0x66145f38cBAC35Ca6F1Dfb4914dF98F1614aeA88',
+    isTestnet: true,
+    color: '#FF6B35',
+  },
 } as const;
 
 // Get chains excluding Ethereum (for source selection when going TO Stacks)
@@ -174,6 +187,7 @@ export const BRIDGE_KIT_CHAIN_NAMES: Record<CCTPChainId, string> = {
   Linea_Sepolia: 'Linea_Sepolia',
   Unichain_Sepolia: 'Unichain_Sepolia',
   Arc_Testnet: 'Arc_Testnet',
+  World_Chain_Sepolia: 'World_Chain_Sepolia',
 };
 
 // Bridge step types
@@ -260,6 +274,14 @@ export const WAGMI_CHAIN_CONFIG = {
     nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
     rpcUrls: { default: { http: ['https://sepolia.unichain.org'] } },
     blockExplorers: { default: { name: 'Uniscan', url: 'https://sepolia.uniscan.xyz' } },
+    testnet: true,
+  },
+  World_Chain_Sepolia: {
+    id: 4801,
+    name: 'World Chain Sepolia',
+    nativeCurrency: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+    rpcUrls: { default: { http: ['https://worldchain-sepolia.g.alchemy.com/public'] } },
+    blockExplorers: { default: { name: 'World Chain Explorer', url: 'https://worldchain-sepolia.explorer.alchemy.com' } },
     testnet: true,
   },
 } as const;
