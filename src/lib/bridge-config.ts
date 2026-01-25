@@ -1,8 +1,8 @@
 // Bridge Configuration Constants
 export const BRIDGE_CONFIG = {
   // Contract addresses on Sepolia testnet
-  X_RESERVE_CONTRACT: "0x008888878f94C0d87defdf0B07f46B93C1934442" as const,
-  ETH_USDC_CONTRACT: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238" as const,
+  X_RESERVE_CONTRACT: import.meta.env.VITE_X_RESERVE_CONTRACT,
+  ETH_USDC_CONTRACT: import.meta.env.VITE_ETH_USDC_CONTRACT,
   
   // Stacks domain ID (constant for all networks)
   STACKS_DOMAIN: 10003,
