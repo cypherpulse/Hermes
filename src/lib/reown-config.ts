@@ -39,7 +39,7 @@ const worldChainSepolia = defineChain({
   testnet: true,
 });
 
-// Get projectId from env
+
 const projectId = import.meta.env.VITE_WALLETCONNECT_PROJECT_ID
 
 if (!projectId) {
@@ -80,7 +80,19 @@ export const wagmiAdapter = new WagmiAdapter({
 
 export const appKit = createAppKit({
   adapters: [wagmiAdapter],
-  networks,
+  networks: [
+    sepolia,
+    baseSepolia,
+    arbitrumSepolia,
+    avalancheFuji,
+    optimismSepolia,
+    polygonAmoy,
+    lineaSepolia,
+    unichainSepolia,
+    arcSepolia,
+    worldChainSepolia,
+  ],
+  defaultNetwork: sepolia,
   projectId,
   metadata,
   themeMode: 'dark',
@@ -89,7 +101,10 @@ export const appKit = createAppKit({
   },
   features: {
     analytics: true,
+    email: false,
+    socials: false,
   },
+  allowUnsupportedChain: false,
 })
 
 export type AppKit = typeof appKit
