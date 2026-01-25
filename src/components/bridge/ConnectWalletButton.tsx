@@ -1,22 +1,23 @@
 
 import { appKit } from '@/lib/reown-config';
 import { useAppKitAccount, useAppKitNetwork } from '@reown/appkit/react';
-import { useBalance } from 'wagmi';
 import { Wallet, LogOut } from 'lucide-react';
 import { useDisconnect } from '@reown/appkit/react';
-import { formatUnits, type Address } from 'viem';
 import { useStacksWallet } from '@/hooks/useStacksWallet';
 import { useState, useRef } from 'react';
+import { useBalance } from 'wagmi';
+import { useWalletModal } from '@solana/wallet-adapter-react-ui';
+import { useNavigate } from 'react-router-dom';
 
 
 export function ConnectWalletButton() {
   const { address, isConnected } = useAppKitAccount();
   const { chainId } = useAppKitNetwork();
-  const { data: balance } = useBalance({ 
-    address: address as Address | undefined 
-  });
+  const { data: balance } = useBalance({ address });
   const { disconnect } = useDisconnect();
   const { connectWallet: connectStacksWallet } = useStacksWallet();
+  const { setVisible } = useWalletModal();
+  const navigate = useNavigate();
   const [showDropdown, setShowDropdown] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -29,10 +30,8 @@ export function ConnectWalletButton() {
   }
 
   const displayAddress = address ? `${address.slice(0, 6)}...${address.slice(-4)}` : 'Connect';
-  const displayBalance = balance 
-    ? parseFloat(formatUnits(balance.value, balance.decimals)).toFixed(4) 
-    : '0.0000';
-  const displaySymbol = balance?.symbol || 'ETH';
+  const displayBalance = balance ? balance.formatted : '0.0000';
+  const displaySymbol = balance ? balance.symbol : 'ETH';
 
 
   if (!isConnected) {
@@ -79,6 +78,19 @@ export function ConnectWalletButton() {
               <div className="flex flex-col min-w-0">
                 <span className="font-semibold text-base text-orange-700 dark:text-orange-200 truncate">Ethereum</span>
                 <span className="text-xs text-gray-600 dark:text-gray-300 truncate">MetaMask, Coinbase...</span>
+              </div>
+            </button>
+            <button
+              className="flex items-center gap-4 w-full text-left px-3 py-3 my-1 rounded-2xl bg-white/80 dark:bg-slate-800/80 hover:bg-purple-50 dark:hover:bg-purple-900 border border-transparent hover:border-purple-300 dark:hover:border-purple-500 shadow-md transition-all focus:outline-none focus:ring-2 focus:ring-purple-400"
+              onClick={() => {
+                setShowDropdown(false);
+                navigate('/solana');
+              }}
+            >
+              <img src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1769232348/solana-sol-logo-png_seeklogo-423095_slbgbb.png" alt="Solana" className="w-10 h-10 rounded-full border border-purple-200 dark:border-purple-700 bg-white shadow-sm" />
+              <div className="flex flex-col min-w-0">
+                <span className="font-semibold text-base text-purple-700 dark:text-purple-200 truncate">Solana</span>
+                <span className="text-xs text-gray-600 dark:text-gray-300 truncate">Phantom, Solflare...</span>
               </div>
             </button>
           </div>
