@@ -10,9 +10,9 @@ import { Cl, Pc } from '@stacks/transactions';
 
 // USDCx contract details on testnet
 const USDCX_CONTRACT = {
-  address: 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM',
-  name: 'usdcx',
-  assetName: 'usdcx-token',
+  address: import.meta.env.VITE_USDCX_ADDRESS,
+  name: import.meta.env.VITE_USDCX_NAME,
+  assetName: import.meta.env.VITE_USDCX_ASSET_NAME,
 };
 
 export function useStacksWallet() {
@@ -116,6 +116,9 @@ export function useStacksWallet() {
     amount: string,
     memo?: string
   ): Promise<string | null> => {
+    console.log('transferUsdcx called with:', { recipient, amount, memo });
+    console.log('amount type:', typeof amount, 'amount value:', amount);
+
     if (!stacksAddress) {
       throw new Error('Wallet not connected');
     }
@@ -124,7 +127,15 @@ export function useStacksWallet() {
 
     try {
       // Convert amount to micro-units (6 decimals)
-      const microAmount = BigInt(Math.floor(parseFloat(amount) * 1_000_000));
+      const parsedAmount = parseFloat(amount);
+      console.log('parsed amount:', parsedAmount, 'isNaN:', isNaN(parsedAmount));
+
+      if (isNaN(parsedAmount) || parsedAmount <= 0) {
+        throw new Error('Invalid amount: ' + amount);
+      }
+
+      const microAmount = BigInt(Math.floor(parsedAmount * 1_000_000));
+      console.log('micro amount:', microAmount);
 
       // Create post-condition using the Pc builder API
       const postCondition = Pc.principal(stacksAddress)
