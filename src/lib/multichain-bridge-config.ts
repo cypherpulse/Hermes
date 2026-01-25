@@ -126,7 +126,7 @@ export const CCTP_CHAINS: Record<CCTPChainId, CCTPChainConfig> = {
     icon: 'https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900372/download_5_fwekae.png',
     rpcUrl: 'https://rpc.sepolia.linea.build',
     blockExplorer: 'https://sepolia.lineascan.build',
-    usdcAddress: '0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068',
+    usdcAddress: '0xFEce4462D57bD51A6A552365A011b95f0E16d9B7',
     isTestnet: true,
     color: '#61DFFF',
   },
