@@ -9,8 +9,9 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { path: '/', label: 'Bridge' },
+    { path: '/', label: 'Etherem Bridge' },
     { path: '/multichain', label: 'Multichain' },
+    { path: '/solana', label: 'Solana Bridge' },
     { path: '/transfer', label: 'Transfer USDCx' },
   ];
 
