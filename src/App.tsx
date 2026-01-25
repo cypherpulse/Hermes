@@ -19,7 +19,6 @@ const App = () => (
         <Route path="/multichain" element={<MultiChain />} />
         <Route path="/solana" element={<SolanaProvider><Solana /></SolanaProvider>} />
         <Route path="/transfer" element={<Transfer />} />
-        {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
