@@ -242,8 +242,6 @@ export function MultiChainBridgeForm({
               {isToStacks && sourceChain !== 'Ethereum_Sepolia' ? (
                 <>
                   <ArrowRight className="w-4 h-4 text-muted-foreground" />
-                  <span className="text-muted-foreground">Ethereum</span>
-                  <ArrowRight className="w-4 h-4 text-muted-foreground" />
                   <span className="font-medium text-primary">Stacks</span>
                 </>
               ) : (
