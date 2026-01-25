@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => ({
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
           'vendor-stacks': ['@stacks/connect', '@stacks/transactions', '@stacks/network'],
+          'vendor-solana': ['@solana/web3.js', '@solana/wallet-adapter-react', '@solana/wallet-adapter-react-ui', '@solana/wallet-adapter-base'],
           'vendor-reown': ['@reown/appkit', '@reown/appkit-adapter-wagmi', 'wagmi', 'viem'],
           'vendor-ui': ['@radix-ui/react-dialog', '@radix-ui/react-tabs', '@radix-ui/react-toast'],
         },
