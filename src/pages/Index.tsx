@@ -2,7 +2,7 @@ import { useBridge } from "@/hooks/useBridge";
 import { ConnectWalletButton } from "@/components/bridge/ConnectWalletButton";
 import { BridgeForm } from "@/components/bridge/BridgeForm";
 import { BalanceDisplay } from "@/components/bridge/BalanceDisplay";
-import { ExternalLink, ArrowDownUp } from "lucide-react";
+import { ExternalLink, ArrowRight } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import { Footer } from '@/components/Footer';
 
@@ -33,9 +33,34 @@ const Index = () => {
             {/* Hero Section */}
             <div className="text-center mb-8">
               <h2 className="text-4xl font-bold mb-3">
-                <span className="text-gradient-bitcoin">USDC</span>
-                <span className="text-foreground"> ↔ USDCx</span>
+                <span className="text-white">Ethereum</span>
+                <span className="text-foreground"> ↔ </span>
+                <span className="text-gradient-bitcoin">Stacks</span>
               </h2>
+              
+              {/* Chain Logos */}
+              <div className="flex items-center justify-center gap-8 mb-4">
+                <div className="flex flex-col items-center">
+                  <img 
+                    src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900941/download_6_b0zu0z.png" 
+                    alt="Ethereum" 
+                    className="w-16 h-16 rounded-full border-2 border-orange-200 dark:border-orange-700 bg-white shadow-lg" 
+                  />
+                  <span className="text-sm font-medium text-white mt-2">USDC</span>
+                </div>
+                
+                <ArrowRight className="w-8 h-8 text-muted-foreground" />
+                
+                <div className="flex flex-col items-center">
+                  <img 
+                    src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768901230/download_7_pixwpt.png" 
+                    alt="Stacks" 
+                    className="w-16 h-16 rounded-full border-2 border-indigo-200 dark:border-indigo-700 bg-white shadow-lg" 
+                  />
+                  <span className="text-sm font-medium text-gradient-bitcoin mt-2">USDCx</span>
+                </div>
+              </div>
+              
               <p className="text-muted-foreground text-lg">
                 Blazing fast bridging between Ethereum and Stacks
               </p>
