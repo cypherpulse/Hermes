@@ -16,8 +16,27 @@ const SolanaPage = () => {
   const [isBridging, setIsBridging] = useState(false);
   const [bridgeStep, setBridgeStep] = useState<'input' | 'bridging' | 'complete'>('input');
   
-  const { publicKey, connected } = useWallet();
-  const { bridgeToStacks, fetchUsdcBalance, usdcBalance, solanaAddress, solBalance, fetchSolBalance } = useSolanaWallet();
+  try {
+    var { publicKey, connected } = useWallet();
+    var { bridgeToStacks, fetchUsdcBalance, usdcBalance, solanaAddress, solBalance, fetchSolBalance } = useSolanaWallet();
+  } catch (error) {
+    console.error('Error initializing Solana hooks:', error);
+    return (
+      <div className="min-h-screen flex flex-col bg-gradient-to-br from-background to-muted/20">
+        <Navbar />
+        <main className="container mx-auto px-4 py-12 flex-1">
+          <div className="max-w-lg mx-auto text-center">
+            <h2 className="text-2xl font-bold mb-4">Solana Bridge</h2>
+            <p className="text-muted-foreground">Loading Solana integration...</p>
+            <div className="mt-4">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto"></div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   const handleBridge = async () => {
     if (!amount || !stacksRecipient) {
@@ -115,9 +134,14 @@ const SolanaPage = () => {
               <Card>
                 <CardContent className="pt-6">
                   <div className="text-center">
-                    <WalletMultiButton />
-                    <p className="text-sm text-muted-foreground mt-2">
+                    <div className="mb-4">
+                      <WalletMultiButton className="!bg-purple-600 hover:!bg-purple-700 !text-white !rounded-lg !px-6 !py-3 !font-medium" />
+                    </div>
+                    <p className="text-sm text-muted-foreground">
                       Connect your Solana wallet to get started
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-2">
+                      Supports Phantom, Solflare, and other Solana wallets
                     </p>
                   </div>
                 </CardContent>
