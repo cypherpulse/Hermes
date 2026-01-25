@@ -19,8 +19,8 @@ interface BridgeStatusState {
 }
 
 // USDCx contract on testnet
-const USDCX_CONTRACT = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx';
-const USDCX_V1_CONTRACT = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx-v1';
+const USDCX_CONTRACT = import.meta.env.VITE_USDCX_CONTRACT;
+const USDCX_V1_CONTRACT = import.meta.env.VITE_USDCX_V1_CONTRACT;
 
 export function useBridgeStatus() {
   const [state, setState] = useState<BridgeStatusState>({
