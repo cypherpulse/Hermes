@@ -14,7 +14,10 @@ interface SolanaProviderProps {
 export const SolanaProvider: FC<SolanaProviderProps> = ({ children }) => {
   const network = WalletAdapterNetwork.Devnet;
   const endpoint = `https://devnet.helius-rpc.com/?api-key=${import.meta.env.VITE_HELIUS_API_KEY}`;
-  const wallets = []; // Use standard wallets
+  
+  const wallets = [
+    // Wallets will be automatically detected by the adapter
+  ];
 
   return (
     <ConnectionProvider endpoint={endpoint}>
