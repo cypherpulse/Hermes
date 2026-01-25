@@ -65,9 +65,11 @@ export function useBridge() {
       account: address,
     });
 
-    await publicClient.waitForTransactionReceipt({ hash });
+    // Note: Removed waitForTransactionReceipt to avoid premature receipt fetching
+    // The monitoring will handle confirmation
+    await refreshBalances();
     return hash;
-  }, [walletClient, address, publicClient]);
+  }, [walletClient, address, publicClient, refreshBalances]);
 
   const depositToStacks = useCallback(async (
     amount: string,
@@ -107,11 +109,12 @@ export function useBridge() {
       account: address,
     });
 
-    await publicClient.waitForTransactionReceipt({ hash });
+    // Note: Removed waitForTransactionReceipt to avoid premature receipt fetching
+    // The monitoring will handle confirmation
     await refreshBalances();
     
     setLastDepositTx(hash);
-    console.log('=== Deposit TX Confirmed ===');
+    console.log('=== Deposit TX Submitted ===');
     console.log('TX Hash:', hash);
     console.log('View on Etherscan:', `https://sepolia.etherscan.io/tx/${hash}`);
 
