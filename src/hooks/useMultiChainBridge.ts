@@ -14,7 +14,8 @@ import { parseUnits, formatUnits, createPublicClient, http, type Address } from 
 import { sepolia } from 'viem/chains';
 import { BridgeKit } from '@circle-fin/bridge-kit';
 import { createViemAdapterFromProvider } from '@circle-fin/adapter-viem-v2';
-import { 
+import { createSolanaKitAdapterFromProvider } from '@circle-fin/adapter-solana-kit';
+import {
   type CCTPChainId, 
   CCTP_CHAINS, 
   MULTICHAIN_ERC20_ABI,
@@ -69,7 +70,9 @@ export function useMultiChainBridge() {
   // Initialize supported chains on mount
   useEffect(() => {
     const chains = getSupportedChains();
-    setSupportedChains(chains.map(c => c.chain));
+    // Filter out Solana since we have a dedicated Solana bridge
+    const filteredChains = chains.filter(c => c.chain !== 'Solana_Devnet');
+    setSupportedChains(filteredChains.map(c => c.chain));
   }, []);
 
   // Fetch USDC balance for a specific chain
@@ -264,8 +267,6 @@ export function useMultiChainBridge() {
 
   /**
    * Bridge from any CCTP chain to Stacks (2-step process)
-   * Step 1: Source → Ethereum via CCTP
-   * Step 2: Ethereum → Stacks via xReserve
    */
   const bridgeToStacks = useCallback(async (
     sourceChainId: CCTPChainId,
@@ -276,6 +277,8 @@ export function useMultiChainBridge() {
       setBridgeState(prev => ({ ...prev, error: 'Wallet not connected' }));
       return false;
     }
+
+  
 
     // If source is Ethereum, just do xReserve directly
     if (sourceChainId === 'Ethereum_Sepolia') {
