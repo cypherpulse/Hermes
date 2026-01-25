@@ -471,10 +471,7 @@ export function BridgeForm({
           )}
         </div>
 
-        {/* Info */}
-        <div className="text-center text-sm text-muted-foreground">
-          <p>Powered by Circle's xReserve Protocol</p>
-        </div>
+
       </CardContent>
     </Card>
   );
