@@ -5,7 +5,7 @@
 <h1 align="center">Hermes Bridge</h1>
 
 <p align="center">
-  <strong>Bridge USDC across Ethereum, Ethereum L2s, and Stacks — Multichain Stablecoin Transfers</strong>
+  <strong>Bridge USDC across Ethereum, Solana, and Stacks — Multichain Stablecoin Transfers</strong>
 </p>
 
 
@@ -13,6 +13,9 @@
 <p align="center">
   <a href="https://ethereum.org">
     <img src="https://img.shields.io/badge/Ethereum-3C3C3D?style=for-the-badge&logo=ethereum&logoColor=white" alt="Ethereum" />
+  </a>
+  <a href="https://solana.com">
+    <img src="https://img.shields.io/badge/Solana-9945FF?style=for-the-badge&logo=solana&logoColor=white" alt="Solana" />
   </a>
   <a href="https://www.stacks.co">
     <img src="https://img.shields.io/badge/Stacks-5546FF?style=for-the-badge&logo=stacks&logoColor=white" alt="Stacks" />
@@ -26,9 +29,9 @@
 </p>
 
 <p align="center">
-  Hermes Bridge is a secure, production-ready multichain bridge enabling seamless USDC transfers between Ethereum, major Ethereum L2s (Arbitrum, Optimism, Base, Polygon, Avalanche, Linea, Unichain, Arc), and Stacks blockchains. It provides:
+  Hermes Bridge is a secure, production-ready multichain bridge enabling seamless USDC transfers between Ethereum, Solana, and Stacks blockchains. It provides:
   <ul>
-    <li><b>Multichain Bridge:</b> Bridge USDC between Ethereum, L2s, and Stacks using Circle's trusted xReserve protocol and CCTP (Cross-Chain Transfer Protocol).</li>
+    <li><b>Multichain Bridge:</b> Bridge USDC between Ethereum, Solana, and Stacks using Circle's trusted xReserve protocol and CCTP (Cross-Chain Transfer Protocol).</li>
     <li><b>Stacks Transfers:</b> Transfer USDCx between Stacks addresses with full custody and control.</li>
   </ul>
 </p>
@@ -123,10 +126,10 @@
 ### Bridge Module
 | Feature | Description |
 |---------|-------------|
-| **USDC Multichain Bridge** | Atomic cross-chain transfers between Ethereum, L2s, and Stacks |
+| **USDC Multichain Bridge** | Atomic cross-chain transfers between Ethereum, Solana, and Stacks |
 | **Circle xReserve Integration** | Industry-standard attestation-based bridging |
 | **Approval-based Flow** | Secure two-step process (approve, then deposit) |
-| **Address Encoding** | Automatic Stacks address encoding for Ethereum contracts |
+| **Address Encoding** | Automatic Stacks address encoding for Ethereum/Solana contracts |
 | **Live Status Tracking** | Monitor bridge status through attestation service |
 
 ### Transfer Module
@@ -141,8 +144,8 @@
 ### Platform Features
 | Feature | Description |
 |---------|-------------|
-| **Multi-Wallet Support** | MetaMask, Coinbase Wallet, WalletConnect, Leather |
-| **Multichain Interface** | Unified UI for Ethereum, L2s, and Stacks operations |
+| **Multi-Wallet Support** | MetaMask, Coinbase Wallet, WalletConnect, Phantom, Solflare, Leather |
+| **Multichain Interface** | Unified UI for Ethereum, Solana, and Stacks operations |
 | **Real-Time Tracking** | Live transaction status and balance updates |
 | **Modern UI/UX** | Beautiful, responsive interface with dark mode |
 | **Optimized Performance** | Built with Vite for blazing fast load times |
@@ -155,13 +158,13 @@
 ### When to Bridge (USDC Multichain)
 
 **Use the Bridge feature when:**
-- You want to move USDC between Ethereum, L2s (Arbitrum, Optimism, Base, Polygon, Avalanche, Linea, Unichain, Arc), and Stacks
+- You want to move USDC between Ethereum, Solana, and Stacks
 - You need to access DeFi opportunities across multiple chains
 - Converting stablecoins for cross-chain operations
 - Leveraging Circle's attestation infrastructure and CCTP
 
 **Bridge Characteristics:**
-- Requires native gas token (ETH, MATIC, AVAX, etc.) for source chain
+- Requires native gas token (ETH, SOL, etc.) for source chain
 - 5-30 minute attestation window
 - Atomic transaction: approve + deposit in one flow
 - Powered by Circle's xReserve and CCTP contracts
@@ -195,18 +198,25 @@ Flow: Connect MetaMask → Approve USDC → Enter Stacks Address → Bridge
 Time: ~20 minutes | Network: Ethereum Sepolia + Stacks Testnet
 ```
 
-### Use Case 2: Stacks Native User Trading
+### Use Case 2: Solana User Entering Stacks
+```
+Solana Wallet (USDC) → Bridge → Stacks Wallet (USDCx)
+Flow: Connect Phantom → Enter Amount & Stacks Address → Bridge
+Time: ~20 minutes | Network: Solana Devnet + Stacks Testnet
+```
+
+### Use Case 3: Stacks Native User Trading
 ```
 Your Stacks Wallet (USDCx) → Transfer → Other Stacks Address (USDCx)
 Flow: Connect Leather → Enter Recipient → Enter Amount → Transfer
 Time: ~15 seconds | Network: Stacks Testnet only
 ```
 
-### Use Case 3: Cross-Chain Arbitrage
+### Use Case 4: Cross-Chain Arbitrage
 ```
-Ethereum (USDC) → Bridge to Stacks (USDCx) → Stacks DeFi → Transfer USDCx
+Ethereum/Solana (USDC) → Bridge to Stacks (USDCx) → Stacks DeFi → Transfer USDCx
 Flow: Complete bridge → Access Stacks DeFi → Transfer profits to recipients
-Time: 20-30 minutes total | Networks: Both chains
+Time: 20-30 minutes total | Networks: Source chain + Stacks
 ```
 
 ---
@@ -334,11 +344,17 @@ graph TB
         WP[Wallet Providers]
         BH[Bridge Hook]
         SH[Stacks Hook]
+        SOH[Solana Hook]
     end
     
     subgraph "Ethereum Sepolia"
         USDC[USDC Token<br/>0x1c7D...7238]
         XR[xReserve Contract<br/>0x0088...4442]
+    end
+    
+    subgraph "Solana Devnet"
+        SUSDC[USDC Token<br/>EPjFW...s1v]
+        SXR[xReserve Contract<br/>CCTP...Bridge]
     end
     
     subgraph "Circle Infrastructure"
@@ -354,10 +370,15 @@ graph TB
     UI --> WP
     WP --> BH
     WP --> SH
+    WP --> SOH
     BH -->|approve| USDC
     BH -->|depositToRemote| XR
+    SOH -->|approve| SUSDC
+    SOH -->|depositToRemote| SXR
     XR -->|Lock USDC| USDC
+    SXR -->|Lock USDC| SUSDC
     XR -.->|Event| ATT
+    SXR -.->|Event| ATT
     ATT -->|Attestation| REL
     REL -->|mint| USDCXV1
     USDCXV1 -->|Mint| USDCX
@@ -366,6 +387,7 @@ graph TB
     style UI fill:#61DAFB,stroke:#333
     style ATT fill:#FFD700,stroke:#333
     style USDCX fill:#5546FF,stroke:#333
+    style SUSDC fill:#9945FF,stroke:#333
 ```
 
 ### Component Architecture
@@ -374,6 +396,7 @@ graph TB
 graph TD
     subgraph "Pages"
         INDEX[Index.tsx]
+        SOLANA[Solana.tsx]
     end
     
     subgraph "Bridge Components"
@@ -388,6 +411,7 @@ graph TD
         USW[useStacksWallet.ts]
         UBS[useBridgeStatus.ts]
         UEW[useEthereumWallet.ts]
+        USWH[useSolanaWallet.ts]
     end
     
     subgraph "Libraries"
@@ -400,6 +424,7 @@ graph TD
     INDEX --> TF
     INDEX --> BD
     INDEX --> CWB
+    SOLANA --> CWB
     
     BF --> UB
     BF --> UBS
@@ -407,11 +432,13 @@ graph TD
     BD --> UB
     BD --> USW
     CWB --> UEW
+    SOLANA --> USWH
     
     UB --> BC
     UB --> SA
     UB --> WC
     USW --> SA
+    USWH --> BC
     
     style INDEX fill:#61DAFB
     style UB fill:#9f9
@@ -491,6 +518,7 @@ sequenceDiagram
 | **Node.js** | >= 18.0.0 | JavaScript runtime |
 | **pnpm** | >= 8.0.0 | Package manager (recommended) |
 | **MetaMask** | Latest | Ethereum wallet |
+| **Phantom/Solflare** | Latest | Solana wallet |
 | **Leather** | Latest | Stacks wallet |
 
 ### Get Testnet Tokens
@@ -499,6 +527,8 @@ sequenceDiagram
 |-------|--------|---------|
 | **Sepolia ETH** | [Google Cloud Faucet](https://cloud.google.com/application/web3/faucet/ethereum/sepolia) | Ethereum Sepolia |
 | **Testnet USDC** | [Circle Faucet](https://faucet.circle.com/) | Ethereum Sepolia |
+| **Devnet SOL** | [Solana Faucet](https://faucet.solana.com/) | Solana Devnet |
+| **Devnet USDC** | [Circle Faucet](https://faucet.circle.com/) | Solana Devnet |
 | **Testnet STX** | [Stacks Faucet](https://explorer.hiro.so/sandbox/faucet?chain=testnet) | Stacks Testnet |
 
 ### Mobile Wallet Support
@@ -512,6 +542,7 @@ sequenceDiagram
    - Description: "Cross-chain USDC bridge between Ethereum and Stacks"
 3. **Supported Wallets**:
    - **Ethereum**: MetaMask, Coinbase Wallet, Trust Wallet, Rainbow
+   - **Solana**: Phantom, Solflare, Backpack
    - **Stacks**: Leather Wallet (mobile app)
 4. **Mobile Browsers**: Works best in Safari (iOS), Chrome (Android)
 
@@ -568,12 +599,12 @@ pnpm lint
 | **USDC Token** | `0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238` | [View on Etherscan](https://sepolia.etherscan.io/token/0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238) |
 | **xReserve** | `0x008888878f94C0d87defdf0B07f46B93C1934442` | [View on Etherscan](https://sepolia.etherscan.io/address/0x008888878f94C0d87defdf0B07f46B93C1934442) |
 
-### Stacks Contracts (Testnet)
+### Solana Contracts (Devnet)
 
 | Contract | Address | Explorer |
 |----------|---------|----------|
-| **USDCx Token** | `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx` | [View on Explorer](https://explorer.hiro.so/txid/ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx?chain=testnet) |
-| **USDCx Protocol** | `ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx-v1` | [View on Explorer](https://explorer.hiro.so/txid/ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM.usdcx-v1?chain=testnet) |
+| **USDC Token** | `EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v` | [View on Solscan](https://solscan.io/token/EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v?cluster=devnet) |
+| **CCTP Message Transmitter** | `CCTPmbSD7gX1bxKPAmg77w8oFzNFpaQiQUWD43TKaecd` | [View on Solscan](https://solscan.io/account/CCTPmbSD7gX1bxKPAmg77w8oFzNFpaQiQUWD43TKaecd?cluster=devnet) |
 
 ### Contract Interactions
 
@@ -746,14 +777,20 @@ export const BRIDGE_CONFIG = {
   X_RESERVE_CONTRACT: "0x008888878f94C0d87defdf0B07f46B93C1934442",
   ETH_USDC_CONTRACT: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
   
+  // Solana Devnet contracts
+  SOLANA_USDC_MINT: "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+  SOLANA_MESSAGE_TRANSMITTER: "CCTPmbSD7gX1bxKPAmg77w8oFzNFpaQiQUWD43TKaecd",
+  
   // Stacks domain ID (constant for all networks)
   STACKS_DOMAIN: 10003,
   
-  // RPC endpoint
+  // RPC endpoints
   ETH_RPC_URL: "https://ethereum-sepolia.publicnode.com",
+  SOLANA_RPC_URL: "https://api.devnet.solana.com",
   
-  // Chain ID
-  CHAIN_ID: 11155111, // Sepolia
+  // Chain IDs
+  ETH_CHAIN_ID: 11155111, // Sepolia
+  SOLANA_CHAIN_ID: 103, // Devnet
 };
 ```
 
@@ -791,15 +828,18 @@ hermes-bridge/
 │   │   ├── useBridge.ts              # Ethereum bridge logic
 │   │   ├── useBridgeStatus.ts        # Bridge status tracking
 │   │   ├── useStacksWallet.ts        # Stacks wallet (@stacks/connect)
+│   │   ├── useSolanaWallet.ts        # Solana wallet integration
 │   │   └── useEthereumWallet.ts      # Ethereum wallet hooks
 │   ├── lib/
 │   │   ├── bridge-config.ts          # Contract addresses & config
 │   │   ├── stacks-address.ts         # Address encoding utilities
 │   │   ├── wagmi-config.ts           # Wagmi/RainbowKit setup
+│   │   ├── solana-client.ts          # Solana utilities
 │   │   └── utils.ts                  # Helper functions
 │   ├── pages/
-│   │   ├── Index.tsx                 # Main page
-│   │   └── NotFound.tsx              # 404 page
+│   │   ├── Index.tsx                 # Ethereum to Stacks bridge
+│   │   ├── Solana.tsx                # Solana to Stacks bridge
+│   │   └── Transfer.tsx              # USDCx transfer page
 │   ├── App.tsx                       # App entry point
 │   ├── main.tsx                      # React entry point
 │   └── index.css                     # Global styles (Tailwind)
@@ -824,12 +864,21 @@ pnpm test:watch
 
 ### Manual Testing Checklist
 
-#### Bridge Flow
+#### Bridge Flow (Ethereum)
 - [ ] Connect Ethereum wallet (MetaMask)
 - [ ] Verify USDC balance displays correctly
 - [ ] Approve USDC spending for xReserve
 - [ ] Execute bridge deposit with valid Stacks address
 - [ ] Verify transaction confirmed on Etherscan
+- [ ] Wait for Circle attestation (5-30 minutes)
+- [ ] Verify USDCx received on Stacks Explorer
+
+#### Bridge Flow (Solana)
+- [ ] Connect Solana wallet (Phantom/Solflare)
+- [ ] Verify USDC and SOL balances display correctly
+- [ ] Enter amount and valid Stacks recipient address
+- [ ] Execute bridge deposit
+- [ ] Verify transaction confirmed on Solscan
 - [ ] Wait for Circle attestation (5-30 minutes)
 - [ ] Verify USDCx received on Stacks Explorer
 
@@ -935,7 +984,9 @@ SP2F70QJ9J57YSSZE76KC1A3X718ADXSZPG8581EP
 |----------|------|
 | **Circle xReserve Docs** | [circle.com/en/xreserve](https://www.circle.com/en/xreserve) |
 | **Stacks Documentation** | [docs.stacks.co](https://docs.stacks.co) |
+| **Solana Documentation** | [docs.solana.com](https://docs.solana.com) |
 | **@stacks/connect** | [stacks.js documentation](https://docs.stacks.co/stacks.js) |
+| **@solana/wallet-adapter** | [solana-labs/wallet-adapter](https://github.com/solana-labs/wallet-adapter) |
 | **Wagmi Documentation** | [wagmi.sh](https://wagmi.sh) |
 | **RainbowKit** | [rainbowkit.com](https://www.rainbowkit.com) |
 | **Viem** | [viem.sh](https://viem.sh) |
