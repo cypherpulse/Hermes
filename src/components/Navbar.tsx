@@ -9,7 +9,7 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    { path: '/', label: 'Etherem Bridge' },
+    { path: '/', label: 'Ethereum Bridge' },
     { path: '/multichain', label: 'Multichain' },
     { path: '/solana', label: 'Solana Bridge' },
     { path: '/transfer', label: 'Transfer USDCx' },
