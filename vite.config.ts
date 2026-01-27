@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => ({
     target: 'esnext',
     minify: 'esbuild',
     sourcemap: mode === 'development',
+    chunkSizeWarningLimit: 2000, // Increase limit to 2MB to suppress warnings
     rollupOptions: {
       output: {
         manualChunks: {
