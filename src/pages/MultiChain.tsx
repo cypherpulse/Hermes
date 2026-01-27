@@ -48,23 +48,74 @@ export default function MultiChain() {
                 <span className="text-gradient-bitcoin">Any Chain</span>
               </h2>
               <p className="text-muted-foreground">
-                Bridge USDC from 7+ chains to Stacks seamlessly
+                Bridge USDC from 10+ chains to Stacks seamlessly
               </p>
             </div>
 
-            {/* Feature Pills */}
-            <div className="flex flex-wrap justify-center gap-2 mb-6">
-              <div className="flex items-center gap-1.5 bg-card border border-border px-3 py-1.5 rounded-full text-sm">
-                <Zap className="w-3.5 h-3.5 text-yellow-500" />
-                <span className="text-muted-foreground">Fast</span>
+            {/* Chain Logos */}
+            <div className="flex justify-center gap-2 mb-6 flex-wrap">
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900941/download_6_b0zu0z.png"
+                  alt="Ethereum"
+                  className="w-6 h-6 object-contain"
+                />
               </div>
-              <div className="flex items-center gap-1.5 bg-card border border-border px-3 py-1.5 rounded-full text-sm">
-                <Shield className="w-3.5 h-3.5 text-green-500" />
-                <span className="text-muted-foreground">Secure</span>
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900372/download_hfl3h3.png"
+                  alt="Base"
+                  className="w-6 h-6 object-contain"
+                />
               </div>
-              <div className="flex items-center gap-1.5 bg-card border border-border px-3 py-1.5 rounded-full text-sm">
-                <span className="text-blue-500">◎</span>
-                  <span className="text-foreground font-medium">Circle Verified</span>
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900371/download_1_a5572s.png"
+                  alt="Arbitrum"
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900372/avalanche-avax-logo_nkju6o.png"
+                  alt="Avalanche"
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900372/download_3_pnzwd3.png"
+                  alt="Chain"
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1769169925/worldcoin_mvuyxj.jpg"
+                  alt="Worldcoin"
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900371/download_2_sv0thd.png"
+                  alt="Chain"
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900372/download_ppknwm.jpg"
+                  alt="Chain"
+                  className="w-6 h-6 object-contain"
+                />
+              </div>
+              <div className="w-8 h-8 rounded-full bg-white border border-border flex items-center justify-center overflow-hidden shadow-sm">
+                <img
+                  src="https://res.cloudinary.com/dg5rr4ntw/image/upload/v1768900371/download_4_nofpom.png"
+                  alt="Chain"
+                  className="w-6 h-6 object-contain"
+                />
               </div>
             </div>
 
